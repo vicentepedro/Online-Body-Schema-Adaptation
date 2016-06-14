@@ -1,0 +1,77 @@
+<application>
+<name>Online Body Schema Adaptation</name>
+
+<dependencies>
+    <port>/icub/camcalib/left/out</port>
+</dependencies>
+<module>
+    <name>yarpview</name>
+    <node>localhost</node>
+    <parameters>--name /HPE_R/viewDT --x 1000 --y 300 </parameters>
+    <tag>input</tag>
+</module>
+
+ <module>
+    <name>yarpview</name>
+    <node>localhost</node>
+    <parameters>--name /HPE_R/viewEdge --x 1440 --y 300</parameters>
+    <tag>output</tag>
+</module>
+
+<connection>
+    <from>/HPE_R/edgePort</from>
+    <to>/HPE_R/viewEdge</to>
+    <protocol>udp</protocol>
+</connection>
+<connection>
+    <from>/HPE_R/DTport</from>
+    <to>/HPE_R/viewDT</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/HPE_R/offsets:o</from>
+    <to>/show-fingers/offsets:i</to>
+    <protocol>udp</protocol>
+</connection>
+<connection>
+    <from>/icub/camcalib/right/out</from>
+    <to>/HPE_R/RightEyeimage:i</to>
+    <protocol>udp</protocol>
+</connection>
+<connection>
+    <from>/icub/camcalib/left/out</from>
+    <to>/HPE_R/LeftEyeimage:i</to>
+    <protocol>udp</protocol>
+</connection>
+<connection>
+    <from>/icub/right_arm/state:o</from>
+    <to>/HPE_R/rightArm:i</to>
+    <protocol>tcp</protocol>
+</connection>
+<connection>
+    <from>/icub/head/state:o</from>
+    <to>/HPE_R/head:i</to>
+    <protocol>tcp</protocol>
+</connection>
+<connection>
+    <from>/HPE_R/rightArm:o</from>
+    <to>/internalmodel/rightArm:i</to>
+</connection>
+<connection>
+    <from>/HPE_R/iCubhead:o</from>
+    <to>/internalmodel/head:i</to>
+</connection>
+<connection>
+    <from>/internalmodel/likelihood:o</from>
+    <to>/HPE_R/likelihood:i</to>
+</connection>
+<connection>
+    <from>/internalmodel/fingertips:o</from>
+    <to>/HPE_R/fingerPosition:i</to>
+</connection>
+<connection>
+    <from>/HPE_R/olhosIcub:o</from>
+    <to>/internalmodel/cam:i</to>
+</connection>
+</application>
