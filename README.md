@@ -26,7 +26,7 @@ After the installation of all the dependencies:
   * Define the CUDA_SDK_ROOT_DIR environment variable to point to 'C:\ProgramData\NVIDIA Corporation\CUDA Samples\v6.5\common'
     * to include some headers needed by the CUDACompareEdge2 module compilation
   * Compile the CUDACompareEdge2 (32bit)
-   * make shure that Cmake finds the CUDA_SDK_ROOT_DIR
+   * make sure that Cmake finds the CUDA_SDK_ROOT_DIR
   * Compile the HandPoseEstimation module
   
  * Copy to the folder 'modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon_Data/Plugins/'
