@@ -22,7 +22,7 @@
 
 # Instructions
 
-After the instalattion of all the dependencies:
+After the installation of all the dependencies:
   * Define the CUDA_SDK_ROOT_DIR environment variable to point to 'C:\ProgramData\NVIDIA Corporation\CUDA Samples\v6.5\common'
     * to include some headers needed by the CUDACompareEdge2 module compilation
   * Compile the CUDACompareEdge2 (32bit)
