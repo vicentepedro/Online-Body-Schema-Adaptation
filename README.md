@@ -8,7 +8,7 @@
 * Visual Studio (tested with VS 10)
 * EMGU 2.4.10 (already embedded in the internal model module build)
 
-# Instalation
+# Installation
 
 * Install CUDA toolkit 6.5 32 bit
   * https://developer.nvidia.com/cuda-toolkit-65
