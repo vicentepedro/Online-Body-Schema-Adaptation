@@ -37,9 +37,9 @@ After the installation of all the dependencies:
 * run the .exe of the internal model in the terminal with the argument '-force-opengl'
   * icub-internalmodel-rightA-cam-Lisbon.exe -force-opengl  
 * run the HandPoseEstimation module (inside VS or from build file)
-* run and connect some of the modules using the XML file in app/scripts/ (with yarpmanager)
+* run and connect the modules using the XML file in 'app/scripts/' (with yarpmanager)
 
-* To Start the estimation send a START command to the HandPoseEstimation module
+* To start the estimation send a START command to the HandPoseEstimation module
   * e.g. yarp write ... /HPE_R/command:i
   * >> START
 
