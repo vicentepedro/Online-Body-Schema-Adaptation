@@ -8,7 +8,7 @@
 * iCub
 * Visual Studio (tested with VS 10)
 
-[already embedded in the internal model module build - EMGUCV 2.4.10]
+[already embedded in the internal model module build - Emgu CV 2.4.10]
 
 # Installation
 
