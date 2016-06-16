@@ -1,18 +1,20 @@
 # Online-Body-Schema-Adaptation
 
-# Dependencies
+# Dependencies and requirements
 * Opencv (tested with 2.4.10)
 * CUDA toolkit (tested with 6.5 - 32bit version)
+  * Nvidia GPU is needed
 * Yarp
 * iCub
 * Visual Studio (tested with VS 10)
-* EMGU 2.4.10 (already embedded in the internal model module build)
+
+[already embedded in the internal model module build - EMGUCV 2.4.10]
 
 # Installation
 
 * Install CUDA toolkit 6.5 32 bit
   * https://developer.nvidia.com/cuda-toolkit-65
-* Install openCV with CUDA support (32 bit) (from sources)
+* Install OpenCV with CUDA support (32 bit) (from sources)
   * https://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.4.10/
 * Install Yarp and iCub (32 bit)
   * (from binaries) http://wiki.icub.org/wiki/Windows:_installation_from_binaries 
@@ -36,7 +38,7 @@ After the installation of all the dependencies:
 # Run the online body schema Adaptation
 * run the .exe of the internal model in the terminal with the argument '-force-opengl'
   * icub-internalmodel-rightA-cam-Lisbon.exe -force-opengl  
-* run the HandPoseEstimation module (inside VS or from build file)
+* run the HandPoseEstimation module
 * run and connect the modules using the XML file in 'app/scripts/' (with yarpmanager)
 
 * To start the estimation send a START command to the HandPoseEstimation module
@@ -49,6 +51,7 @@ Options:
 # Final notes
 
 Please be aware that this repository is still under development and some errors may occur.
+The internal model module can only run in windows machines.
 
 For more details see the following reference:
 
@@ -62,4 +65,4 @@ For more details see the following reference:
     DOI={10.3389/frobt.2016.00007},      
     ISSN={2296-9144}
     
-The article can be found [here] (http://journal.frontiersin.org/article/10.3389/frobt.2016.00007/full)
+The full article can be found [here] (http://journal.frontiersin.org/article/10.3389/frobt.2016.00007/full)
