@@ -1,4 +1,4 @@
-# Online-Body-Schema-Adaptation
+# Online Body Schema Adaptation
 
 # Dependencies and requirements
 * Opencv (tested with 2.4.10)
