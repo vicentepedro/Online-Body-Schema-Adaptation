@@ -51,8 +51,10 @@ int main() {
 
     Network yarp;
     if (!yarp.checkNetwork())
-        return -1;
-	
+    {
+		yError("Yarp Server is running?");
+		return -1;
+	}
 	iCubArm Arm("right");
 	iKinChain *chainArm,*chainArm2;
 	chainArm=Arm.asChain();
@@ -127,11 +129,21 @@ int main() {
 	ImageOf<PixelMono> & yarpEdge = edgePort.prepare();
 	ImageOf<PixelBgr> & yarpDT = DTPort.prepare();
 	
+	bool close = false;
 	yInfo(" Waiting for input/start Signal...");
 	/****** wait for motion start  ******/
 	Bottle *input = signalPort.read();
 	/************************************/
-	yInfo(" check!");
+	string cmdS= input->toString();
+	if(cmdS.compare("STOP")==0 || cmdS.compare("stop")==0 || cmdS.compare("Stop")==0)
+	{
+		yInfo("Stopping module");
+		close = true;
+	}
+	else if(cmdS.compare("START")==0 || cmdS.compare("start")==0 || cmdS.compare("Start")==0)
+	{
+		yInfo("Module will start");
+	}
 	image = imagePort.read();
 	imageL = imagePortL.read();
 	receive = RightArmPort.read();
@@ -201,11 +213,13 @@ int main() {
 	
 	filtro._encodersHead = PosHead; // change afterwords
 
+	/* Output files - Debug
 	std::ofstream matrix_file("R1.txt",5); // ,5 to append in file
 	std::ofstream nonFilter_matrix("NFM.txt",5); // ,5 to append in file
 	std::ofstream nonFilter_EF("NFEF.txt",5); // ,5 to append in file
 	std::ofstream endEf_file("EF1.txt",5);
 	std::ofstream enc_file("ENC.txt",5);
+	*/
 	int iter=0;
 	//Time::delay(1.5);
 /*	
@@ -213,7 +227,8 @@ int main() {
     Scalar color2(0,255,0);
     Scalar color3(255,0,0);
 */
-	while(1) {
+
+	while(!close) {
 		//waiting for encoders Arm
 	    timing2=tempo.now();
         yInfo("Iteration:%d", iter);
@@ -254,9 +269,9 @@ int main() {
 			xf=chainArm->EndEffPosition();
 			MArm = chainArm->getH();
 
-			endEf_file << xf.toString().c_str() << endl;
-			matrix_file << MArm.toString().c_str() << endl ;
-			enc_file << PosInicial.toString().c_str() << endl;
+			//endEf_file << xf.toString().c_str() << endl;
+			//matrix_file << MArm.toString().c_str() << endl ;
+			//enc_file << PosInicial.toString().c_str() << endl;
 			// Insert Constant errors
 	/*
 		    PosInicial[0]=PosInicial[0]+5;//+20;
@@ -273,8 +288,8 @@ int main() {
 			}
 			chainArm2->setAng(qarm2);
 			MArm2 = chainArm2->getH();
-			nonFilter_matrix << MArm2.toString().c_str() << endl ;
-			nonFilter_EF << chainArm2->EndEffPosition().toString().c_str()<< endl;
+			//nonFilter_matrix << MArm2.toString().c_str() << endl ;
+			//nonFilter_EF << chainArm2->EndEffPosition().toString().c_str()<< endl;
 			// cvCvtColor((IplImage*)image->getIplImage(), cvImage, CV_RGB2GRAY); 
 			cvCvtColor((IplImage*)imageL->getIplImage(), cvImageL, CV_RGB2BGR);
 			cvCvtColor((IplImage*)image->getIplImage(), cvImage , CV_RGB2BGR);
@@ -378,8 +393,29 @@ int main() {
 		imageL=NULL;
 		image=NULL;
 		//return 0;
+		Bottle *input = signalPort.read(false);
+	    /************************************/
+	    if(input!=NULL)
+		{
+			string cmdS= input->toString();
+			if(cmdS.compare("STOP")==0 || cmdS.compare("stop")==0 || cmdS.compare("Stop")==0)
+			{
+				yInfo("Stopping module");
+				close = true;
+    		}
+		}
 	}
-			
+	//
+	yDebug("closing ports");
+	signalPort.close();
+	imagePort.close();  
+	imagePortL.close();
+	imagePort2.close();  
+	imagePort2L.close();
+	edgePort.close();
+	DTPort.close();
+	RightArmPort.close();
+	HeadPort.close();
 	// Close Robot Device
 	return 0;
 }

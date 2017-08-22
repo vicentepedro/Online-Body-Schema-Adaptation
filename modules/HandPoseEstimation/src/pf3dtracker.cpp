@@ -35,7 +35,7 @@ PF3DTracker::PF3DTracker()
 //destructor
 PF3DTracker::~PF3DTracker()
 {
-    cout<<"oh my god! they killed kenny!    you bastards!\n";
+    cout<<"oh my god! they killed the filter!\n";
 }
 
 void PF3DTracker::init() {
