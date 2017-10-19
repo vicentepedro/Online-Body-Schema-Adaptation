@@ -1,3 +1,11 @@
+/**
+* Copyright: (C) 2009 RobotCub Consortium
+* Authors: Pedro Vicente
+* Adapted from:  Matteo Taiana Particle Filter tracker code
+
+* CopyPolicy: Released under the terms of the GNU GPL v2.0.
+*/
+
 #include <pf3dTracker.hpp>
 
 #include <opencv2/imgproc/imgproc.hpp>  
@@ -46,24 +54,15 @@ void PF3DTracker::init() {
 	_RightArmPort_out.open("/HPE_R/rightArm:o"); // RA encoders
 	_likelihood_port.open("/HPE_R/likelihood:i"); // Likelihood of each particle
 	_fingers_port.open("/HPE_R/fingerPosition:i"); // Finger tips position in the left image
-	 // save the initial position of the head.
 	_outputDataPort.open("/HPE_R/offsets:o");
 	_ini = true;
 	Time::delay(1.5);
 	Network::connect("/HPE_R/offsets:o","/controller/offsetsRA:i");
-	// DataDumpers...
-	
-	/*
-	Network::connect("/simRightEyeimage/out","/best");
-	Network::connect("/RightEyeimage/out","/imageFilter");
-	*/
 
 
-	// Deveria-se abrir o simulador aqui...
-	// Iniciar portas de comunicação.
 	_nParticles=200;
-	_accelStDev=3.0;//2.5;  //%4.7; // 4.3 To start in 3º in the first iteration. noise to spread particles
-// Estrutura
+	_accelStDev=3.0;//noise to spread particles
+
     srand((unsigned int)time(0)); //make sure random numbers are really random.
 	//srand(727);
     rngState = cvRNG(rand());
@@ -115,7 +114,7 @@ void PF3DTracker::init() {
 	// generate particles
 
 	float mean,StDev;
-	StDev=3.5;//3;   //2; // StDev 4º
+	StDev=3.5;
 
     //initialize Theta1
     mean=0;
@@ -138,13 +137,11 @@ void PF3DTracker::init() {
 int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat ImageMat_Real_grayL) {
 
 	//*****************************************
-   //calculate the likelihood of each particle
-   //*****************************************
+    //calculate the likelihood of each particle
+    //*****************************************
 	_iter++;
 	float likelihood;
 	IplImage *cvImageTmp, *cvImageFinal=NULL;
-	//float maxT1,maxT2,maxT3,maxT4,maxT5,maxT6,maxT7;
-	//float weightedMeanT1, weightedMeanT2, weightedMeanT3,weightedMeanT4,weightedMeanT5,weightedMeanT6,weightedMeanT7;
     float sumLikelihood=0.0;
     float maxLikelihood=0.0;
 	ImageOf<PixelRgb> *image, *imageL;
@@ -164,18 +161,7 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	std::ofstream matrix_file("R2.txt",5);
 	std::ofstream endEf_file("EF2.txt",5);
     int   maxIndex=-1;
-	// Dedos - acerto
-	/*
-	command[7]=52;
-	command[8]=15;
-	command[9]=15;
-	command[10]=15;
-	command[11]=5;
-	command[12]=5;
-	command[13]=5;
-	command[14]=5;
-	command[15]=10;
-	*/
+
 	ImageOf<PixelBgr> & yarpReturnImage = _outputVideoPort.prepare();
 	
 	// Merge Right and Left cameras
@@ -189,18 +175,13 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	ImageMat_Real_gray.copyTo(right);
 	
 	cv::flip(im3,im4,0);
-	//bitwise_not(im3,im3);
-	//cvtColor(im3, im3, 
-	//cvImageTmp=cvCloneImage(&(IplImage)ImageMat_Real_grayL);
+
 	cvImageTmp=cvCloneImage(&(IplImage)im4);
 	if(cvImageFinal!=NULL)
 		cvReleaseImage(&cvImageFinal);		
 	cvImageFinal=cvImageTmp;
 	cvImageTmp=NULL;
 	yarpReturnImage.wrapIplImage(cvImageFinal);
-	
-
-	//Time::delay(0.2);
 	
 	timing1=tempo.now();
 
@@ -217,15 +198,6 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 		}
 	}
 	sender.addInt(_nParticles);  // n_particles
-	/*	sender.addDouble(PosInicial[0] + (float)cvmGet(_particles,0,count));
-		sender.addDouble(PosInicial[1] + (float)cvmGet(_particles,1,count));
-		sender.addDouble(PosInicial[2] + (float)cvmGet(_particles,2,count));
-		sender.addDouble(PosInicial[3] + (float)cvmGet(_particles,3,count));
-		sender.addDouble(PosInicial[4] + (float)cvmGet(_particles,4,count));
-		sender.addDouble(PosInicial[5] + (float)cvmGet(_particles,5,count));
-		sender.addDouble(PosInicial[6] + (float)cvmGet(_particles,6,count));
-	*/
-		//_posArm->positionMove(command.data());
 
    	_RightArmPort_out.write();
 	if(_ini){
@@ -249,18 +221,12 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	yInfo(" Waiting for Hypotheses evaluation");
 	_receive_likelihood = _likelihood_port.read();
 	yInfo(" DONE");
-	//_fingers = _fingers_port.read(false);
-	//sender.clear();
-	
-	// _fingerPos = fingerPort.read() 
+
 	timing2=tempo.now();
 	yInfo( "Time: %f",timing2-timing1);
 	maxLikelihood=0;
 	for(int count=0;count<_nParticles;count++) {
-		//cout << receive_likelihood->pop().asDouble() << " ";
 		likelihood = _receive_likelihood->pop().asDouble();
-		//cout << likelihood << " ";
-		//likelihoodFile << likelihood;
 		cvmSet(_particles,7,count,likelihood);
 		sumLikelihood+=likelihood;
 		if(likelihood>maxLikelihood) {
@@ -274,17 +240,7 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	double maxWeight_j=0;
 	int maxWeight_index=-1;
 
-	std::ofstream out_file0("Theta0.txt",5);
-	std::ofstream out_file1("Theta1.txt",5);
-	std::ofstream out_file2("Theta2.txt",5);
-	std::ofstream out_file3("Theta3.txt",5);
-	std::ofstream out_file4("Theta4.txt",5);
-	std::ofstream out_file5("Theta5.txt",5);
-	std::ofstream out_file6("Theta6.txt",5);
-	std::ofstream out_file7("BestOne.txt",5);
-
 	for(int count=0;count<_nParticles;count++) {
-		//cvmSet(_particles,7,count,(cvmGet(_particles,7,count)/sumLikelihood));
 		double sum1=0;
 		for(int j=0;j<_nParticles;j++) {
 			double sum2=0;
@@ -294,37 +250,18 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 					// || pi-pj||^2 / sigma^2
 					sum2+= pow( ((float)cvmGet(_particles,junta,j)-(float)cvmGet(_particles,junta,count)) ,2)/pow(sigma,2); //Multivariate normal distribution
 				}
-				//cout << "sum2: " << sum2 << endl;
 				sum1 += std::exp(-sum2/( 2) )*cvmGet(_particles,7,j);
 			}
 		}
-		sum1 = sum1/(_nParticles*sqrt(pow(2*M_PI,1)*pow(sigma,7)));  // Dividir por numero de particulas - metrica fica independente do numero de particulas que se usa no filtro
-		// cout <<"sum1: " << sum1*500 << endl;
-		// cout << "likelihood: " <<  (float) cvmGet(_particles,7,count) << endl;
+		sum1 = sum1/(_nParticles*sqrt(pow(2*M_PI,1)*pow(sigma,7)));
 		weight_j = 500*sum1 + cvmGet(_particles,7,count);
 		if(weight_j>maxWeight_j) {
 			maxWeight_j=weight_j;
 			maxWeight_index=count;
 		}
 
-		out_file0 << (float)(cvmGet(_particles,0,count)) << " ";
-		out_file1 << (float)(cvmGet(_particles,1,count)) << " ";
-		out_file2 << (float)(cvmGet(_particles,2,count)) << " ";
-		out_file3 << (float)(cvmGet(_particles,3,count)) << " ";
-		out_file4 << (float)(cvmGet(_particles,4,count)) << " ";
-		out_file5 << (float)(cvmGet(_particles,5,count)) << " ";
-		out_file6 << (float)(cvmGet(_particles,6,count)) << " ";
    }
 
-		out_file0 << endl;
-		out_file1 << endl;
-		out_file2 << endl;
-		out_file3 << endl;
-		out_file4 << endl;
-		out_file5 << endl;
-		out_file6 << endl;
-
-		
 	// Best Particle
 	 Bottle &bestOffset = _outputDataPort.prepare();
 
@@ -347,10 +284,6 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	chainArm->setAng(qarm);
 	xf=chainArm->EndEffPosition();
 	MArm = chainArm->getH();
-
-	endEf_file << xf.toString().c_str() << endl;
-	matrix_file << MArm.toString().c_str() << endl;
-	
 
 	float minimum_likelihood=0.55; //do not resample if maximum likelihood is lower than this.
                                       //this is intended to prevent that the particles collapse on the origin when you start the tracker.
@@ -396,8 +329,7 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 }
 
 bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldParticlesWeights, CvMat* newParticlesState, CvMat* cumWeight, float sum2)
-{																								//likelihood//
-    //function [newParticlesState] = systematic_resampling(oldParticlesWeight, oldParticlesState)
+{																								
 
     double u; //random number [0,1)
     double sum;
@@ -405,8 +337,7 @@ bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldPart
     int rIndex;  //index of the randomized array
     int cIndex;  //index of the cumulative weight array. cIndex -1 indicates which particle we think of resampling.
     int npIndex; //%new particle index, tells me how many particles have been created so far.
-	 _numParticlesReceived=0;
-    int numParticlesToGenerate = _nParticles - _numParticlesReceived; //martim -  não existem particulas de fora
+    int numParticlesToGenerate = _nParticles;
 
     //%N is the number of particles.
     //[lines, N] = size(oldParticlesWeight);
@@ -435,24 +366,16 @@ bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldPart
     //%instread of accessing this vector, the elements are computed on the fly:
     //%randomVector(a)= (a-1)/N+u.
 
-    //%COMPUTE THE ARRAY OF CUMULATIVE WEIGHTS
-    //cumWeight=zeros(1,N+1);
-    //cumWeight[0]=0;
     ((float*)(cumWeight->data.ptr))[0]=0;
     for(c1=0;c1<_nParticles;c1++)
     {
-        //cumWeight[c1+1]=cumWeight[c1]+oldParticlesWeight[c1];
 
         ((float*)(cumWeight->data.ptr))[c1+1]=((float*)(cumWeight->data.ptr))[c1]+((float*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1];
-        //cout<<"cumulative at position "<<c1+1<<" = "<<((float*)(cumWeight->data.ptr))[c1+1]<<endl;
 
     }
-    //CHECK IF THERE IS SOME ROUNDING ERROR IN THE END OF THE ARRAY.
-    //if(cumWeight[_nParticles]!=1)
+
     if(((float*)(cumWeight->data.ptr))[_nParticles]!=1)
     {
-        //fprintf('rounding error?\n');
-        //printf("cumWeight[_nParticles]==%15.10e\n",((float*)(cumWeight->data.ptr))[_nParticles]);
         ((float*)(cumWeight->data.ptr))[_nParticles]=1;
         if( ((float*)(cumWeight->data.ptr))[_nParticles]!=1)
         {
@@ -464,9 +387,6 @@ bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldPart
         }
     }
 
-    //cout<<"cumulative at position "<<_nParticles-1<<" = "<<((float*)(cumWeight->data.ptr))[_nParticles-1]<<endl;
-    //cout<<"cumulative at position "<<_nParticles<<" = "<<((float*)(cumWeight->data.ptr))[_nParticles]<<endl;
-
     //%PERFORM THE ACTUAL RESAMPLING
     rIndex=0; //index of the randomized array
     cIndex=1; //index of the cumulative weight array. cIndex -1 indicates which particle we think of resampling.
@@ -474,12 +394,10 @@ bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldPart
 
     while(npIndex < numParticlesToGenerate) //martim
     {
-        //siamo sicuri che deve essere >=? ??? !!! WARNING
+
         if(((float*)(cumWeight->data.ptr))[cIndex]>=(double)rIndex/(double)numParticlesToGenerate+u) //martim
         {
-            //%particle cIndex-1 should be copied.
-            //printf("replicating particle %d\n",cIndex-1);
-            //newParticlesState(npIndex)=oldParticlesState(cIndex-1);
+
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*0))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*0))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*1))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*1))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*2))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*2))[cIndex-1];
@@ -493,7 +411,6 @@ bool PF3DTracker::systematic_resampling(CvMat* oldParticlesState, CvMat* oldPart
         }
         else
         {
-            //printf("not replicating particle %d\n",cIndex-1);
             cIndex=cIndex+1;
         }
     }

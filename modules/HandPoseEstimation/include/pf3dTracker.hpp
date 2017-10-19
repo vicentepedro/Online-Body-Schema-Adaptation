@@ -16,7 +16,6 @@
 #include <yarp/dev/PolyDriver.h>
 
 #include <yarp/os/Network.h>
-#include <yarp/os/Module.h>
 #include <yarp/os/all.h>
 #include <yarp/os/Stamp.h>
 
@@ -40,7 +39,7 @@ using namespace yarp::sig;
 using namespace yarp::sig::draw;
 using namespace yarp::sig::file;
 
-class PF3DTracker : public Module
+class PF3DTracker
 {
 public:
 	yarp::sig::Vector _encodersHead;
@@ -57,7 +56,6 @@ PolyDriver _robotArm;
 PolyDriver _robotHead;
 
 yarp::sig::Vector _encodersArm;
-//yarp::sig::Vector _encodersHead;
 Property _optionsHead;
 Property _optionsArm;
 
@@ -78,8 +76,6 @@ BufferedPort< Bottle >	_HeadPort_out;
 BufferedPort< Bottle >	_likelihood_port;
 BufferedPort< Bottle >	_fingers_port;
 Bottle *_receive_likelihood;
-// BufferedPort<ImageOf<PixelBgr> > _outputVideoPort_RGB;
-// BufferedPort<ImageOf<PixelBgr> > _outputVideoPortL_RGB;
 
 ConstString _outputDataPortName;
 BufferedPort<Bottle> _outputDataPort;
@@ -150,10 +146,6 @@ PF3DTracker(); //constructor
 
 void PF3DTracker::init();
 int PF3DTracker::run2(yarp::sig::Vector PosInicial, cv::Mat ImageMat_Real_gray,  cv::Mat ImageMat_Real_grayL);
-//virtual bool open(Searchable& config); //member to set the object up.
-//virtual bool close();                  //member to close the object.
-//virtual bool interruptModule();        //member to close the object.
-//virtual bool updateModule();           //member that is repeatedly called by YARP, to give this object a chance to do something.
 
 };
 
