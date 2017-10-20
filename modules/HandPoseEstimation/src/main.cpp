@@ -186,8 +186,6 @@ int main() {
 	cout << PosInicial.toString().c_str() << endl;
 	cvImageGRAY  = cvCreateImage(cvSize(image->width(), image->height()), IPL_DEPTH_8U, 1 );
 	cvImage  = cvCreateImage(cvSize(image->width(), image->height()), IPL_DEPTH_8U, 3 );
-	IplImage *cvImageEdge  = cvCreateImage(cvSize(image->width(), image->height()), IPL_DEPTH_8U, 3 );
-	IplImage * cvImageDT  = cvCreateImage(cvSize(image->width(), image->height()), IPL_DEPTH_16U, 3 );
 	cvImageL = cvCreateImage(cvSize(imageL->width(), imageL->height()), IPL_DEPTH_8U, 3 );
 
 	yarp::sig::Vector zero(4); zero(0)=0; zero(1)=0; zero(2)=0; zero(3)=1;
@@ -197,8 +195,8 @@ int main() {
 	PosInicial=commandArm;
 
 
-	ImageMat_Real=cvImage;
-	ImageMat_RealL=cvImageL;
+	ImageMat_Real=cvarrToMat(cvImage);
+	ImageMat_RealL=cvarrToMat(cvImageL);
 
 	cvtColor( ImageMat_Real, ImageMat_Real_gray, CV_RGB2GRAY );
 	cvtColor( ImageMat_RealL, ImageMat_Real_grayL, CV_RGB2GRAY );
@@ -288,19 +286,15 @@ int main() {
 			cvtColor(dtImageL,dtImage2L,CV_GRAY2BGR);
 			dtImage2L.convertTo(dtImage2L_8,CV_8UC3);
 
-			cvImageTmp=cvCloneImage(&(IplImage)detectedEdgesL);
-			cvReleaseImage(&cvImageEdge);
-			cvImageEdge=cvImageTmp;
-			cvImageTmp=NULL;
-			cvImageTmp=cvCloneImage(&(IplImage)dtImage2L_8);
-			cvReleaseImage(&cvImageDT);
-			cvImageDT=cvImageTmp;
-			cvImageTmp=NULL;
 
 			edgePort.prepare();
 			DTPort.prepare();
-			yarpEdge.wrapIplImage(cvImageEdge);
-			yarpDT.wrapIplImage(cvImageDT);
+
+            IplImage cvImageEdge = detectedEdgesL;
+            IplImage cvImageDT = dtImage2L_8;
+            cvCopy( &cvImageEdge, static_cast<IplImage*>(yarpEdge.getIplImage()) );
+            cvCopy( &cvImageDT, static_cast<IplImage*>(yarpDT.getIplImage()) );
+
 			edgePort.write(); 
 			DTPort.write(); 
 			Point fingerP;
@@ -313,8 +307,8 @@ int main() {
 			cout << ",max_index" << max_index << endl;
 			int init = (max_index)*12;
 			
-			ImageMat=cvImage;
-			ImageMat_RealL=cvImageL;
+			ImageMat=cvarrToMat(cvImage);
+			ImageMat_RealL=cvarrToMat(cvImageL);
 			/******* END EDGE BASED ********/
 
 			timing3=tempo.now();

@@ -141,9 +141,8 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
     //*****************************************
 	_iter++;
 	float likelihood;
-	IplImage *cvImageTmp, *cvImageFinal=NULL;
-    float sumLikelihood=0.0;
-    float maxLikelihood=0.0;
+        float sumLikelihood=0.0;
+        float maxLikelihood=0.0;
 	ImageOf<PixelRgb> *image, *imageL;
 	// R
 	Mat ImageMat,ImageMat_init,ImageMat_gray,ImageMat_result1,ImageMat_result2;
@@ -158,9 +157,7 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	iKinChain *chainArm;
 	chainArm=Arm.asChain();
 
-	std::ofstream matrix_file("R2.txt",5);
-	std::ofstream endEf_file("EF2.txt",5);
-    int   maxIndex=-1;
+        int   maxIndex=-1;
 
 	ImageOf<PixelBgr> & yarpReturnImage = _outputVideoPort.prepare();
 	
@@ -176,13 +173,9 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	
 	cv::flip(im3,im4,0);
 
-	cvImageTmp=cvCloneImage(&(IplImage)im4);
-	if(cvImageFinal!=NULL)
-		cvReleaseImage(&cvImageFinal);		
-	cvImageFinal=cvImageTmp;
-	cvImageTmp=NULL;
-	yarpReturnImage.wrapIplImage(cvImageFinal);
-	
+        IplImage cvImageFinal = im4;
+        cvCopy( &cvImageFinal, static_cast<IplImage*>(yarpReturnImage.getIplImage()) );
+
 	timing1=tempo.now();
 
 	Bottle& sender = _RightArmPort_out.prepare();
@@ -211,10 +204,6 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	}
 	_outputVideoPort.write();
 	
-	//Bottle *receive_likelihood;
-	//likelihood;
-
-	//std::ofstream likelihoodFile("like.txt",5);
 	
 	yInfo(" Waiting for Hypotheses generation");
 	_fingers = _fingers_port.read();
@@ -269,17 +258,15 @@ int PF3DTracker::run2(yarp::sig::Vector PosInicial, Mat ImageMat_Real_gray,  Mat
 	bestOffset.clear();
 	for(int i=0;i<7;i++) {
 		command[i]=PosInicial[i] + (float)cvmGet(_particles,i,maxWeight_index);
-		out_file7 << (float)cvmGet(_particles,i,maxWeight_index) << " " ;
-		if(_iter>45) // START sending offsets
+                if(_iter>45) // START sending offsets
 		   bestOffset.addDouble(cvmGet(_particles,i,maxWeight_index));
 	}
 	bestOffset.addDouble(_iter);
 	_outputDataPort.write();
 	yInfo("likelihood_best: %f", (float) cvmGet(_particles,7,maxWeight_index));
-	out_file7 << endl;
 	qarm.resize(chainArm->getDOF());
 	for(unsigned int i=0; i<=chainArm->getDOF(); i++) {
-		qarm[i]=command[i]*CTRL_DEG2RAD;
+                qarm[i]=command[i]*iCub::ctrl::CTRL_DEG2RAD;
 	}
 	chainArm->setAng(qarm);
 	xf=chainArm->EndEffPosition();

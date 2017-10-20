@@ -144,8 +144,8 @@ public:
 PF3DTracker(); //constructor
 ~PF3DTracker(); //destructor
 
-void PF3DTracker::init();
-int PF3DTracker::run2(yarp::sig::Vector PosInicial, cv::Mat ImageMat_Real_gray,  cv::Mat ImageMat_Real_grayL);
+void init();
+int run2(yarp::sig::Vector PosInicial, cv::Mat ImageMat_Real_gray,  cv::Mat ImageMat_Real_grayL);
 
 };
 

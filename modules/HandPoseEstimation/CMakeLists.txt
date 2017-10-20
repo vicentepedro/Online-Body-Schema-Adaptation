@@ -12,7 +12,7 @@ PROJECT(${PROJECTNAME})
 
 FIND_PACKAGE(YARP)
 FIND_PACKAGE(ICUB)
-FIND_package(OPENCV)
+FIND_package(OpenCV)
 
 # add include directories
 include_directories(${YARP_INCLUDE_DIRS})
