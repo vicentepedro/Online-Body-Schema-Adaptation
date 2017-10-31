@@ -1,9 +1,5 @@
 # Online Body Schema Adaptation
 
-
-# New Documentation
-http://vicentepedro.github.com/Online-Body-Schema-Adaptation 
-
 # Dependencies and requirements
 * Opencv (tested with 2.4.10)
 * CUDA toolkit (tested with 6.5 - 32bit version)
