@@ -435,7 +435,7 @@ Mat handPoseEstimationModule::processImages(Mat inputImage)
 {
     Mat edges,dtImage;
     cvtColor(inputImage,edges,CV_RGB2GRAY);
-    //Left Image
+    //Blur Image
     blur( edges, edges, Size(3,3) );
     Canny(edges,edges,65,3*65,3);
     threshold(edges,edges,100,255,THRESH_BINARY_INV);
