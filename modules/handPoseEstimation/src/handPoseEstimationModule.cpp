@@ -408,7 +408,8 @@ bool handPoseEstimationModule::updateModule()
     double timing2=time.now();
     yInfo("Iteration: %d", iteration);
     iteration++;
-
+    
+    // ReadImages
     IplImage *iR = static_cast<IplImage*> (imageInputPortR.read(false)->getIplImage());  // read an image R
     IplImage *iL = static_cast<IplImage*> (imageInputPortL.read(false)->getIplImage()); // read an image L
 
