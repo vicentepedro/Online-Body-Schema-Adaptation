@@ -164,8 +164,6 @@ bool handPoseEstimationModule::runSMCIteration()
     double sumLikelihood=0.0;
     double likelihood=0.0;
 
-    mergeAndFlipImages();
-
     // prepare containers to send data through YARP
     ImageOf<PixelBgr> &yarpReturnImage = LRimageOutputPort.prepare();
     Bottle &outputParticles = particlesOutPort.prepare();
@@ -424,7 +422,7 @@ bool handPoseEstimationModule::updateModule()
     imageL=cvarrToMat(iL);
     imageProcR = processImages(imageR);
     imageProcL = processImages(imageL);
-
+    mergeAndFlipImages();
     //yInfo() << encodersArm.toString().c_str();
     runSMCIteration();
     
