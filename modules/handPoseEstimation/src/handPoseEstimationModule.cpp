@@ -163,7 +163,6 @@ bool handPoseEstimationModule::runSMCIteration()
     double sumLikelihood=0.0;
     double likelihood=0.0;
 
-    mergeAndFlipImages();
     // prepare containers to send data through YARP
     ImageOf<PixelBgr> &yarpReturnImage = LRimageOutputPort.prepare();
     Bottle &outputParticles = particlesOutPort.prepare();
@@ -382,9 +381,9 @@ bool handPoseEstimationModule::updateModule()
    
 	if(imageInputPortR.getInputCount()<=0 || imageInputPortL.getInputCount()<=0 || armPort.getInputCount()<=0 || headPort.getInputCount()<=0) {
         yInfo(" Waiting for external connections...");
-		Time::delay(0.5);
+        Time::delay(0.5);
         return !closing;
-	}
+    }
     if(stopped)
     {
         yInfo("Module Stopped");
@@ -395,23 +394,29 @@ bool handPoseEstimationModule::updateModule()
         yInfo("Module paused");
         return !closing;
     }
-   	Time time;
+    Time time;
     double timing2=time.now();
 
 	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iR = imageInputPortR.read(false);  // read an image R
 	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iL = imageInputPortL.read(false); // read an image L
 
-	if (iR==NULL || iL ==NULL) { // empty images
+    if (iR==NULL || iL ==NULL) { // empty images
         return !closing;    
     }
+
     yInfo("Iteration: %d", iteration);
 	iteration++;
     imageR=cvarrToMat(static_cast<IplImage*> (iR->getIplImage()));
 	imageL=cvarrToMat(static_cast<IplImage*> (iL->getIplImage()));
-    imageProcR = processImages(imageR);
-    imageProcL = processImages(imageL);
+    // Read Encoders
     readArmJoints();
     readHeadJoints();
+	
+    imageR=cvarrToMat(iR);
+    imageL=cvarrToMat(iL);
+    imageProcR = processImages(imageR);
+    imageProcL = processImages(imageL);
+    mergeAndFlipImages();
     //yInfo() << encodersArm.toString().c_str();
     runSMCIteration();
  
@@ -423,6 +428,7 @@ Mat handPoseEstimationModule::processImages(Mat inputImage)
     Mat edges,dtImage;
     Mat dtImage2,dtImage2_8;
     cvtColor(inputImage,edges,CV_RGB2GRAY);
+
     // Image
 	blur( edges, edges, Size(3,3) );
 	Canny(edges,edges,65,3*65,3);
@@ -431,46 +437,43 @@ Mat handPoseEstimationModule::processImages(Mat inputImage)
     cvtColor(dtImage,dtImage2,CV_GRAY2BGR);
     dtImage.convertTo(dtImage2_8,CV_8UC3);
     return dtImage2_8;
-
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::readArmJoints()
 {
-	// read Arm joint angles
-	Bottle *receive = armPort.read();
+    // read Arm joint angles
+    Bottle *receive = armPort.read();
 
-	string s1 = receive->toString();
-	char *str = new char[s1.size()+1];
-	strcpy(str, s1.c_str());
-	char * pch;
-	pch = strtok ( (char*) str," ");
-	int i=0;
-
-	while (pch != NULL) {
-		//printf ("%s\n",pch);
-		encodersArm[i]=atof(pch);
-		pch = strtok (NULL, " ");
-		i++;
-	}
+    string s1 = receive->toString();
+    char *str = new char[s1.size()+1];
+    strcpy(str, s1.c_str());
+    char * pch;
+    pch = strtok ( (char*) str," ");
+    int i=0;
+    while (pch != NULL) {
+        //printf ("%s\n",pch);
+        encodersArm[i]=atof(pch);
+        pch = strtok (NULL, " ");
+        i++;
+    }
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::readHeadJoints()
 {
     //Read Head Joint Angles    
     Bottle *receive = headPort.read();
-	string s2 = receive->toString();
-	char *str = new char[s2.size()+1];
-	strcpy(str, s2.c_str());
-	char * pch;
-	pch = strtok ( (char*) str," ");
-	int i=0;
-
-	while (pch != NULL) {
-		//printf ("%s\n",pch);
-		encodersHead[i]=atof(pch);
-		pch = strtok (NULL, " ");
-		i++;
-	}
+    string s2 = receive->toString();
+    char *str = new char[s2.size()+1];
+    strcpy(str, s2.c_str());
+    char * pch;
+    pch = strtok ( (char*) str," ");
+    int i=0;
+    while (pch != NULL) {
+        //printf ("%s\n",pch);
+        encodersHead[i]=atof(pch);
+        pch = strtok (NULL, " ");
+        i++;
+    }
 }
 /******************************************************************************************/
 double handPoseEstimationModule::getPeriod()
