@@ -77,7 +77,6 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     encodersHead.resize(6); // 6 DoF
     initializeSMCVariables();
     initSMC();
-    
 
 }
 /******************************************************************************************/
@@ -165,17 +164,15 @@ bool handPoseEstimationModule::runSMCIteration()
     double likelihood=0.0;
 
     mergeAndFlipImages();
-
     // prepare containers to send data through YARP
     ImageOf<PixelBgr> &yarpReturnImage = LRimageOutputPort.prepare();
     Bottle &outputParticles = particlesOutPort.prepare();
     Bottle &outputHead= headOutPort.prepare();
     // prepare concatenated Image
-    IplImage cvImageFinal = concatenatedImage;
-    cvCopy( &cvImageFinal, static_cast<IplImage*>(yarpReturnImage.getIplImage()) );
-
+    yarpReturnImage.resize(concatenatedImage.cols,concatenatedImage.rows);
+    concatenatedImage.copyTo( cvarrToMat( static_cast<IplImage*> ( yarpReturnImage.getIplImage() ) ) );
     // Fill Bottle with offsets+encoders to generate
-    for(int index=0;index< nParticles;index++) {
+    for(int index=0;index < nParticles;index++) {
         // Arm + offsets
         for (unsigned int joint=0;joint<7;joint++) {
             outputParticles.addDouble(encodersArm[joint]+cvmGet(particles,joint,index));
@@ -375,21 +372,15 @@ bool handPoseEstimationModule::systematic_resampling(CvMat* oldParticlesState, C
 /******************************************************************************************/
 void handPoseEstimationModule::mergeAndFlipImages(){// Merge Right and Left cameras
 
-    Size sz1 = imageProcL.size();
-    Size sz2 = imageProcR.size();
-    Mat tmp(sz1.height, sz1.width+sz2.width, CV_8UC3);
-    Mat left(tmp, Rect(0, 0, sz1.width, sz1.height));
-    imageProcL.copyTo(left);
-    Mat right(tmp, Rect(sz1.width, 0, sz2.width, sz2.height));
-    imageProcR.copyTo(right);
-
-    cv::flip(tmp,concatenatedImage,0);
+    cv::hconcat(imageProcL, imageProcR,concatenatedImage);
+    cv::flip(concatenatedImage,concatenatedImage,0);
+    cvtColor(concatenatedImage,concatenatedImage,CV_GRAY2BGR);
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::updateModule()
 {
    
-	if(imageInputPortR.getInputCount()<=0 && imageInputPortL.getInputCount()<=0 && armPort.getInputCount()<=0 && headPort.getInputCount()<=0) {
+	if(imageInputPortR.getInputCount()<=0 || imageInputPortL.getInputCount()<=0 || armPort.getInputCount()<=0 || headPort.getInputCount()<=0) {
         yInfo(" Waiting for external connections...");
 		Time::delay(0.5);
         return !closing;
@@ -406,37 +397,41 @@ bool handPoseEstimationModule::updateModule()
     }
    	Time time;
     double timing2=time.now();
-    yInfo("Iteration: %d", iteration);
-	iteration++;
 
-	IplImage *iR = static_cast<IplImage*> (imageInputPortR.read(false)->getIplImage());  // read an image R
-	IplImage *iL = static_cast<IplImage*> (imageInputPortL.read(false)->getIplImage()); // read an image L
+	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iR = imageInputPortR.read(false);  // read an image R
+	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iL = imageInputPortL.read(false); // read an image L
 
 	if (iR==NULL || iL ==NULL) { // empty images
         return !closing;    
     }
-    imageR=cvarrToMat(iR);
-	imageL=cvarrToMat(iL);
+    yInfo("Iteration: %d", iteration);
+	iteration++;
+    imageR=cvarrToMat(static_cast<IplImage*> (iR->getIplImage()));
+	imageL=cvarrToMat(static_cast<IplImage*> (iL->getIplImage()));
     imageProcR = processImages(imageR);
     imageProcL = processImages(imageL);
     readArmJoints();
     readHeadJoints();
     //yInfo() << encodersArm.toString().c_str();
     runSMCIteration();
-    
+ 
     return !closing;
 }
 /******************************************************************************************/
 Mat handPoseEstimationModule::processImages(Mat inputImage)
 {
     Mat edges,dtImage;
+    Mat dtImage2,dtImage2_8;
     cvtColor(inputImage,edges,CV_RGB2GRAY);
-    //Left Image
+    // Image
 	blur( edges, edges, Size(3,3) );
 	Canny(edges,edges,65,3*65,3);
     threshold(edges,edges,100,255,THRESH_BINARY_INV);
 	distanceTransform(edges,dtImage,CV_DIST_L2,CV_DIST_MASK_5);
-    return dtImage;
+    cvtColor(dtImage,dtImage2,CV_GRAY2BGR);
+    dtImage.convertTo(dtImage2_8,CV_8UC3);
+    return dtImage2_8;
+
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::readArmJoints()

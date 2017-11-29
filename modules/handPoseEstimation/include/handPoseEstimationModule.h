@@ -104,8 +104,8 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         CvRNG rngState;
         /*** Input Ports ***/
         yarp::os::RpcServer handlerPort;
-    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelRgb> > imageInputPortR;  // Right Image
-    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelRgb> > imageInputPortL;  // Left Image
+    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortR;  // Right Image
+    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortL;  // Left Image
         yarp::os::BufferedPort< yarp::os::Bottle >	armPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	headPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	likelihoodPort;
@@ -115,7 +115,6 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
 	    yarp::os::BufferedPort< yarp::os::Bottle >	particlesOutPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	offsetsPort;
 
-        
     protected:
         cv::Mat processImages(cv::Mat inputImage);
         bool initializeSMCVariables();
