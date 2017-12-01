@@ -168,6 +168,7 @@ bool handPoseEstimationModule::runSMCIteration()
     Bottle &outputParticles = particlesOutPort.prepare();
     Bottle &outputHead= headOutPort.prepare();
     // prepare concatenated Image
+    concatenatedImage.convertTo(concatenatedImage,CV_8UC3);
     yarpReturnImage.resize(concatenatedImage.cols,concatenatedImage.rows);
     concatenatedImage.copyTo( cvarrToMat( static_cast<IplImage*> ( yarpReturnImage.getIplImage() ) ) );
     // Fill Bottle with offsets+encoders to generate
@@ -218,6 +219,8 @@ bool handPoseEstimationModule::runSMCIteration()
         //if(_iter>45) // START sending offsets
 		   bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
 	}
+    lastBestOffset.clear();
+    lastBestOffset = bestOffset;
 	bestOffset.addDouble(iteration);
 	offsetsPort.write();
 
@@ -411,9 +414,6 @@ bool handPoseEstimationModule::updateModule()
     // Read Encoders
     readArmJoints();
     readHeadJoints();
-	
-    imageR=cvarrToMat(iR);
-    imageL=cvarrToMat(iL);
     imageProcR = processImages(imageR);
     imageProcL = processImages(imageL);
     mergeAndFlipImages();
@@ -549,6 +549,9 @@ bool handPoseEstimationModule::resume()
 yarp::os::Bottle handPoseEstimationModule::lastOffsets()
 {
     yInfo("lastOffsets command received");
+    Bottle reply;
+    reply = lastBestOffset;
+    return reply;
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::quit()

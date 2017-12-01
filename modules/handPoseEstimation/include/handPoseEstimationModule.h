@@ -78,6 +78,7 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         double KDEStdDev;
         int maxWeightIndex;
         bool stopped, paused;
+        yarp::os::Bottle lastBestOffset;
         yarp::sig::Vector encodersArm, encodersHead;
         //yarp::sig::ImageOf<yarp::sig::PixelRgb> *imageR, *imageL;
         cv::Mat imageR, imageL;
