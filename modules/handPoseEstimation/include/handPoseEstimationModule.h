@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <deque>
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Bottle.h>
@@ -115,6 +116,10 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         yarp::os::BufferedPort< yarp::os::Bottle >	headOutPort;
 	    yarp::os::BufferedPort< yarp::os::Bottle >	particlesOutPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	offsetsPort;
+        yarp::os::BufferedPort< yarp::os::Bottle >	fingers_port;
+        yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > outputPortImage;
+        yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > outputPortImage2;
+
 
     protected:
         cv::Mat processImages(cv::Mat inputImage);

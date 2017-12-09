@@ -28,7 +28,7 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     // artifNoiseStdDev = initialArtificialNoiseStdDev; 
     lowerBoundNoise = rf.check("lowerBound", Value(0.04)).asDouble();//
     upperBoundNoise = rf.check("upperBound", Value(3.5)).asDouble();//
-    increasedMultiplier = rf.check("increaseMultiplier", Value(1.15)).asDouble();//
+    increasedMultiplier = rf.check("increaseMultiplier", Value(1.2)).asDouble();//
     decreasedMultiplier = rf.check("decreaseMultiplier", Value(0.85)).asDouble();//
     minimumLikelihood = rf.check("minimumLikelihood", Value(0.55)).asDouble();//
 
@@ -77,7 +77,10 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     encodersHead.resize(6); // 6 DoF
     initializeSMCVariables();
     initSMC();
-
+    maxWeightIndex=0; // Initialize variable
+    fingers_port.open("/hpe/fingerPosition:i"); 
+    outputPortImage.open("/" + moduleName + "/imageCorrected:o");
+    outputPortImage2.open("/" + moduleName + "/imageCanonical:o");
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::initializeSMCVariables()
@@ -153,6 +156,10 @@ bool handPoseEstimationModule::initSMC()
 
     // Artificial Noise Initialization
     artifNoiseStdDev = initialArtificialNoiseStdDev;
+    // Setting first particle as Zero offset    
+    for (unsigned int joint=0;joint<8;joint++) {
+            cvmSet(particles,joint,0,0.0);
+    }
     return true;
 }
 /******************************************************************************************/
@@ -176,6 +183,9 @@ bool handPoseEstimationModule::runSMCIteration()
         // Arm + offsets
         for (unsigned int joint=0;joint<7;joint++) {
             outputParticles.addDouble(encodersArm[joint]+cvmGet(particles,joint,index));
+            if(index==0){
+                yInfo() << cvmGet(particles,joint,index);
+            }
         }
         // Fingers
         for(unsigned int joint=7;joint<16;joint++) {
@@ -208,6 +218,7 @@ bool handPoseEstimationModule::runSMCIteration()
 			maxLikelihood=likelihood;
 		}
 	}
+    cvmSet(particles,7,0,0.0);
     kernelDensityEstimation();
 
     // Send Best Particle
@@ -253,6 +264,12 @@ bool handPoseEstimationModule::runSMCIteration()
     }
     cvRandArr( &rngState, noise, CV_RAND_NORMAL, cvScalar(mean), cvScalar(artifNoiseStdDev));
     cvAdd(particles1to7,noise,particles1to7);
+    yInfo() << "ArtNoise: " << artifNoiseStdDev;
+    // Setting first particle as Zero offset
+    for (unsigned int joint=0;joint<8;joint++) {
+            cvmSet(particles,joint,0,0.0);
+    }
+    
     return true;
 }
 /******************************************************************************************/
@@ -278,6 +295,7 @@ void handPoseEstimationModule::kernelDensityEstimation()
 		double weight = 500*sum1 + cvmGet(particles,7,iParticle);
 		if(weight>maxWeight) {
 			maxWeightIndex=iParticle;
+            maxWeight = weight;
 		}
 
    }
@@ -411,15 +429,113 @@ bool handPoseEstimationModule::updateModule()
 	iteration++;
     imageR=cvarrToMat(static_cast<IplImage*> (iR->getIplImage()));
 	imageL=cvarrToMat(static_cast<IplImage*> (iL->getIplImage()));
+    Mat tmp;
+    tmp= imageL.clone();
     // Read Encoders
     readArmJoints();
     readHeadJoints();
     imageProcR = processImages(imageR);
     imageProcL = processImages(imageL);
     mergeAndFlipImages();
-    //yInfo() << encodersArm.toString().c_str();
+    yInfo() << encodersArm.toString().c_str();   
     runSMCIteration();
  
+    Scalar red(0,0,255); //RED
+    Scalar green(0,255,0); //GREEN
+    Scalar blue(255,0,0); //BLUE
+    Scalar yellow(0,200,255);
+    Scalar color(100,200,200);
+    Point fingerP;
+    Bottle* fingers = fingers_port.read(false);
+    if(fingers==NULL)
+        return !closing;    
+    if(fingers->size() ==0)
+    {
+	    cout << "empty fingers" << endl;
+    }
+    int init = (nParticles-1-maxWeightIndex)*12;
+    deque<cv::Point> point_f;
+    for( int i = init;i< init + 12; i++) 
+    {
+    	if(i%2 == 0) 
+        {
+    		fingerP.x = (int) fingers->get(i).asDouble();
+    		//cout << "x: " << fingers->get(i).asDouble() << endl;
+    	}
+	    else 
+        {
+		    fingerP.y = (int) (240- fingers->get(i).asDouble());
+		    cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
+            point_f.push_front(fingerP);
+		    if(i==init+1) // index
+		        circle(imageL,fingerP,5,red,-1);
+		    if(i==init+3) // little
+		        circle(imageL,fingerP,5,color,-1);
+            if(i==init+5) // middle
+		        circle(imageL,fingerP,5,yellow,-1);
+            if(i==init+7) // ring
+		        circle(imageL,fingerP,5,color,-1);
+		    if(i==init+9) // thumb
+		        circle(imageL,fingerP,5,green,-1);
+		    if(i==init+11) // EndEffector
+		        circle(imageL,fingerP,5,blue,-1);
+
+	    }
+    }
+    for( int k = 0; k<6;k++) 
+    {
+        cv::line(imageL,point_f.front(),point_f.back(),cv::Scalar(255,255,224),2);
+        point_f.pop_back();
+    }
+    point_f.clear();
+    init = (nParticles-1)*12;
+    for( int i = init;i< init + 12; i++) 
+    {
+    	if(i%2 == 0) 
+        {
+    		fingerP.x = (int) fingers->get(i).asDouble();
+    	}
+	    else 
+        {
+		    fingerP.y = (int) (240- fingers->get(i).asDouble());
+		    cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
+            point_f.push_front(fingerP);
+		    if(i!=init+9 && i!=init+11)
+		    circle(tmp,fingerP,5,color,-1);
+		    if(i==init+1) // index
+		        circle(tmp,fingerP,5,red,-1);
+		    if(i==init+3) // little
+		        circle(tmp,fingerP,5,color,-1);
+            if(i==init+5) // middle
+		        circle(tmp,fingerP,5,yellow,-1);
+            if(i==init+7) // ring
+		        circle(tmp,fingerP,5,color,-1);
+		    if(i==init+9) // thumb
+		        circle(tmp,fingerP,5,green,-1);
+		    if(i==init+11) // EndEffector
+		        circle(tmp,fingerP,5,blue,-1);
+
+	    }
+    }
+    for( int k = 0; k<6;k++) 
+    {
+        cv::line(tmp,point_f.front(),point_f.back(),cv::Scalar(255,255,224),2);
+        point_f.pop_back();
+    }
+    yarp::sig::ImageOf< yarp::sig::PixelBgr> &resultImage = outputPortImage.prepare();
+    IplImage outIpl = imageL;
+    resultImage.resize(outIpl.width,outIpl.height);
+    cvCopy( &outIpl,static_cast<IplImage*>(resultImage.getIplImage()) );
+
+    outputPortImage.write();
+
+    yarp::sig::ImageOf< yarp::sig::PixelBgr> &resultImage2 = outputPortImage2.prepare();
+    IplImage outIpl2 = tmp;
+    resultImage2.resize(outIpl2.width,outIpl2.height);
+    cvCopy( &outIpl2,static_cast<IplImage*>(resultImage2.getIplImage()) );
+
+    outputPortImage2.write();
+    yInfo() << "maxWeightIndex" << maxWeightIndex;
     return !closing;
 }
 /******************************************************************************************/
