@@ -78,6 +78,7 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         double minimumLikelihood;
         double KDEStdDev;
         int maxWeightIndex;
+        int minimumIteration;
         bool stopped, paused;
         yarp::os::Bottle lastBestOffset;
         yarp::sig::Vector encodersArm, encodersHead;

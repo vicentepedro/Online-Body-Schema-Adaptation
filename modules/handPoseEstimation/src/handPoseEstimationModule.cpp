@@ -31,7 +31,7 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     increasedMultiplier = rf.check("increaseMultiplier", Value(1.2)).asDouble();//
     decreasedMultiplier = rf.check("decreaseMultiplier", Value(0.85)).asDouble();//
     minimumLikelihood = rf.check("minimumLikelihood", Value(0.55)).asDouble();//
-
+    minimumIteration = rf.check("minIteration", Value(35)).asInt();//
     KDEStdDev =  rf.check("KDEStdDev", Value(1.0)).asDouble();//
     //Open RPCServer
     handlerPortName = "/" + moduleName + "/rpc:i";
@@ -221,20 +221,22 @@ bool handPoseEstimationModule::runSMCIteration()
     cvmSet(particles,7,0,0.0);
     kernelDensityEstimation();
 
-    // Send Best Particle
-    Bottle &bestOffset = offsetsPort.prepare();
-	bestOffset.clear();
+
 	yInfo("Best likelihood: %f", (float) cvmGet(particles,7,maxWeightIndex));
 
-	for(int i=0;i<7;i++) {
-        //if(_iter>45) // START sending offsets
-		   bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
-	}
-    lastBestOffset.clear();
-    lastBestOffset = bestOffset;
-	bestOffset.addDouble(iteration);
-	offsetsPort.write();
-
+    if(iteration>minimumIteration) {// START sending offsets
+        // Send Best Particle
+        Bottle &bestOffset = offsetsPort.prepare();
+        bestOffset.clear();
+	    for(int i=0;i<7;i++) {
+            
+		       bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
+	    }
+        lastBestOffset.clear();
+        lastBestOffset = bestOffset;
+	    bestOffset.addDouble(iteration);
+	    offsetsPort.write();
+    }
     // Resampling or not Resampling. That's the Question
 
     if(maxLikelihood>minimumLikelihood) {
