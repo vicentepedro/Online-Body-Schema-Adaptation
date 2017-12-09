@@ -1,0 +1,33 @@
+/**
+*
+* @ingroup  
+* \defgroup internalModel internalModel
+* Internal model generator based on Unity Game Engine.
+* Version: v2.0 
+*
+* \section Description
+*
+* The Robot's internal model generator receives head and arm encoders along with the real pre-processed perception and generates the appearance of the hand and arm on the left and right cameras calling the likelihood DLL function to compute the similarity between the each hypothesis (200 samples)
+*
+*
+* \section Dependencies
+*
+* OpenCV
+* CUDA ToolKit
+* YARP C# bindings
+*
+* \section Input Ports
+*
+* /internalmodel/rightArm:i  Receives the arm encoders
+* /internalmodel/head:i      Receives the head encoders  
+* /internalmodel/cam:i       Receives both left and right image (side-by-side)
+*
+* \section Output Ports
+*
+* /internalmodel/likelihood:o Sends the likelihood vector
+* /internalmodel/fingertips:o Sends the projection of the fingertips (u,v pixel) on the left camera image
+*
+* \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
+* \n
+* \copyright  License terms, for example: released under the terms of the GNU GPL v3.0 .
+*/
