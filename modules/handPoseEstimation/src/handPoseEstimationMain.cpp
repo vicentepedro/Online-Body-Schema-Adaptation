@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
         yInfo("--increaseMultiplier for the Artificial Noise (default=1.15)");
         yInfo("--decreaseMultiplier for the Artificial Noise (default=0.85)");
         yInfo("--KDEStdDev StdDev of each kernel (default=1.0)");
+        yInfo("--minIteration number of iterations before output estimated Offsets (default=35)");
         return 0; // EXIT_SUCCESS
     }
 
