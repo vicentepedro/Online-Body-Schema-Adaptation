@@ -1,13 +1,16 @@
 <application>
-<name>Online Body Schema Adaptation</name>
+<name>Online Body Schema Adaptation - Dataset Simulation</name>
 
-<dependencies>
-    <port>/icub/camcalib/left/out</port>
-</dependencies>
+<module>
+    <name>handPoseEstimation</name>
+    <node>localhost</node>
+    <parameters> --arm right --minIteration 0</parameters>
+</module>
 <module>
     <name>yarpview</name>
     <node>localhost</node>
     <parameters>--name /hpe/viewImageCanonical --x 1000 --y 300 </parameters>
+    <tag>input</tag>
 </module>
 <module>
     <name>yarpview</name>
@@ -16,22 +19,22 @@
     <tag>input</tag>
 </module>
 <connection>
-    <from>/icub/camcalib/right/out</from>
+    <from>/iCubUnitySim/cam/right</from>
     <to>/hpe/rightCam:i</to>
     <protocol>tcp</protocol>
 </connection>
 <connection>
-    <from>/icub/camcalib/left/out</from>
+    <from>/iCubUnitySim/cam/left</from>
     <to>/hpe/leftCam:i</to>
     <protocol>tcp</protocol>
 </connection>
 <connection>
-    <from>/icub/right_arm/state:o</from>
+    <from>/iCubUnitySim/rightArm</from>
     <to>/hpe/rightArm:i</to>
     <protocol>tcp</protocol>
 </connection>
 <connection>
-    <from>/icub/head/state:o</from>
+    <from>/iCubUnitySim/head</from>
     <to>/hpe/head:i</to>
     <protocol>tcp</protocol>
 </connection>
