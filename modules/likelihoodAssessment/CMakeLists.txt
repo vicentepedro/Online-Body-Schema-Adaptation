@@ -1,6 +1,6 @@
 # Copyright: (C) 2012-2015 POETICON++, European Commission FP7 project ICT-288382
 # Copyright: (C) 2016 VisLab, Institute for Systems and Robotics,
-#                Instituto Superior Técnico, Universidade de Lisboa, Lisbon, Portugal
+#                Instituto Superior TÃ©cnico, Universidade de Lisboa, Lisbon, Portugal
 # Authors: Pedro Vicente <pvicente@isr.ist.utl.pt>
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
@@ -21,7 +21,7 @@ include_directories(${CUDA_INCLUDE_DIRS})
 # Not shure if this is the better way to include this
 include_directories(${CUDA_SDK_ROOT_DIR}/inc)
 
-set(folder_source src/main.cpp
+set(folder_source src/likelihood.cpp
                   src/Cuda_Gl.cu)
 				  
 #set(folder_header include/include.hpp)
