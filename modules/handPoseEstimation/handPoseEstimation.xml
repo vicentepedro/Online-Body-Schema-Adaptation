@@ -16,16 +16,16 @@
   <arguments>
     <param default="hpe" desc="Name of the module (default='hpe')">name</param>
     <param default="right" desc="Arm which the module should connect to. (default='right')">arm</param>
-    <param default="0.0" desc="Mean for the initial distribution of the particles [in degres]. (default=0.0)">initialMean</param>
-    <param default="3.5" desc="Standard Deviation of the initial distribution of the particles [degres] (default=3.5)">initialStdDev</param>
-    <param default="3.0" desc="Initial (standard deviation of) Artificial Noise  to spread the particles after each iteration (default=3.0)">artificialNoiseStdDev</param>
-    <param default="0.04" desc="Artificial Noise lower bound (StdDev). Should be greater than Zero to prevent the particles to collapse in one simples value (default=0.04)">lowerBound</param>
+    <param default="0.0" desc="Mean for the initial distribution of the particles [in degrees]. (default=0.0)">initialMean</param>
+    <param default="3.5" desc="Standard Deviation of the initial distribution of the particles [in degrees] (default=3.5)">initialStdDev</param>
+    <param default="3.0" desc="Initial (standard deviation of) Artificial Noise to spread the particles after each iteration [in degrees] (default=3.0)">artificialNoiseStdDev</param>
+    <param default="0.04" desc="Artificial Noise lower bound (StdDev). Should be greater than Zero to prevent the particles to collapse in one simples value [in degrees] (default=0.04)">lowerBound</param>
     <param default="3.5" desc=" Artificial Noise upper bound (StdDev). The artificial noise should have a upper bound to prevent the particles to diverge after each resampling stage (default=3.5)">upperBound</param>
      <param default="0.55" desc="MinimumLikelihood [0,1] in order to resample the particles (default=0.55)">minimumLikelihood</param>
-     <param default="1.15" desc="increase the artificial noise of a certain value (currentValue*increaseMultiplier) if the maximum likihood is lower than the minimumLikelihood (default=1.15)">increaseMultiplier</param>
+     <param default="1.2" desc="increase the artificial noise of a certain value (currentValue*increaseMultiplier) if the maximum likihood is lower than the minimumLikelihood (default=1.15)">increaseMultiplier</param>
      <param default="0.85" desc="decrease the artificial noise of a certain value (currentValue*decreaseMultiplier) if the maximum likihood is greater than the minimumLikelihood (default=0.85)">decreaseMultiplier</param>
-
-     <param default="1.0" desc="Standard deviation of each kernel in the Kernel Density Estimation algorithm (default=1.0)">KDEStdDev</param>
+     <param default="1.0" desc="Standard deviation of each kernel in the Kernel Density Estimation algorithm [in degrees] (default=1.0)">KDEStdDev</param>
+<param default="35" desc="number of iterations before output estimated Offsets (default=35)">minIteration</param>
   </arguments>
 
   <authors>
@@ -68,6 +68,13 @@
           This port will receive the likelihood Bottle containing the likelihood for each particles generated in the internal model.
           </description>
       </input>
+      <input>
+      <type>Bottle</type>
+          <port carrier="udp">/hpe/fingerPosition:i</port>
+          <description>
+          This port will receive a Bottle containing the fingertips position on the left image for each particles generated in the internal model.
+          </description>
+      </input>
       <output>
           <type>image</type>
           <port carrier="udp">/hpe/LRimage:o</port>
@@ -94,6 +101,20 @@
           <port carrier="udp">/hpe/bestOffsets:o</port>
           <description>
           This port outputs the best set of Offsets after each iteration of the Sequential Monte Carlo parameter estimation algorithm
+          </description>
+      </output>
+      <output>
+          <type>image</type>
+          <port carrier="udp">/hpe/imageCorrected:o</port>
+          <description>
+          This port sends the left camera image with the fingertips positions superimposed according with the best estimated set of offsets. 
+          </description>
+      </output>
+      <output>
+          <type>image</type>
+          <port carrier="udp">/hpe/imageCanonical:o</port>
+          <description>
+          This port sends the left camera image with the fingertips positions superimposed according with the canonical model (i.e. without angular offsets in the arm)
           </description>
       </output>
   </data>
