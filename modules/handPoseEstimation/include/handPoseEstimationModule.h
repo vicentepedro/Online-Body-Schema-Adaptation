@@ -65,7 +65,7 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         std::string likelihoodPortName;
         std::string LRimageOutputPortName;
         std::string	headOutPortName;
-	    std::string	particlesOutPortName;
+        std::string	particlesOutPortName;
         std::string offsetsPortName;
         bool closing;
 
@@ -106,15 +106,15 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         CvRNG rngState;
         /*** Input Ports ***/
         yarp::os::RpcServer handlerPort;
-    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortR;  // Right Image
-    	yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortL;  // Left Image
+        yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortR;  // Right Image
+        yarp::os::BufferedPort< yarp::sig::ImageOf<yarp::sig::PixelBgr> > imageInputPortL;  // Left Image
         yarp::os::BufferedPort< yarp::os::Bottle >	armPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	headPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	likelihoodPort;
         /*** Output Ports ***/
         yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > LRimageOutputPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	headOutPort;
-	    yarp::os::BufferedPort< yarp::os::Bottle >	particlesOutPort;
+        yarp::os::BufferedPort< yarp::os::Bottle >	particlesOutPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	offsetsPort;
         yarp::os::BufferedPort< yarp::os::Bottle >	fingers_port;
         yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > outputPortImage;

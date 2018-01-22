@@ -71,14 +71,14 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     headOutPort.open(headOutPortName.c_str()); // output the head encoders
     //arm joints
     particlesOutPortName = "/" + moduleName + "/particles:o";
-	particlesOutPort.open(particlesOutPortName.c_str()); // output the arm encoders + offsets to estimate
+    particlesOutPort.open(particlesOutPortName.c_str()); // output the arm encoders + offsets to estimate
     offsetsPortName = "/" + moduleName + "/bestOffsets:o";
     offsetsPort.open(offsetsPortName.c_str());
     // Initializing variables
     closing = false;
     stopped = true;
     paused  = false;
-	encodersArm.resize(16); // 16 DoF
+    encodersArm.resize(16); // 16 DoF
     encodersHead.resize(6); // 6 DoF
     initializeSMCVariables();
     initSMC();
@@ -93,39 +93,39 @@ bool handPoseEstimationModule::initializeSMCVariables()
     nParticles=200; // HardCoded since the Internal Model should be recompiled to support a different amount of particles
 
     //allocate memory for the particles;
-	particles=cvCreateMat(8,nParticles,CV_32FC1); // 0-6 Betas 7- likelihood
-	//fill the memory with zeros
-	cvSetZero(particles);
-	
-	//define ways of accessing the particles:
-	// Beta1
-	particles1 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles1, 1, nParticles, CV_32FC1, particles->data.ptr, particles->step );
-	// Beta2
-	particles2 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles2, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*1, particles->step );
-	// Beta3
-	particles3 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles3, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*2, particles->step );
-	// Beta4
-	particles4 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles4, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*3, particles->step );
-	// Beta5
-	particles5 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles5, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*4, particles->step );
-	// Beta6
-	particles6 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles6, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*5, particles->step );
-	// Beta7
-	particles7 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles7, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*6, particles->step );
-	// likelihood
-	particles8 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
-	cvInitMatHeader( particles8, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*7, particles->step );
+    particles=cvCreateMat(8,nParticles,CV_32FC1); // 0-6 Betas 7- likelihood
+    //fill the memory with zeros
+    cvSetZero(particles);
 
-	//theta1-theta7
-	particles1to7 = cvCreateMatHeader( 7,nParticles, CV_32FC1);
-	cvInitMatHeader( particles1to7, 7, nParticles, CV_32FC1, particles->data.ptr, particles->step );
+    //define ways of accessing the particles:
+    // Beta1
+    particles1 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles1, 1, nParticles, CV_32FC1, particles->data.ptr, particles->step );
+    // Beta2
+    particles2 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles2, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*1, particles->step );
+    // Beta3
+    particles3 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles3, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*2, particles->step );
+    // Beta4
+    particles4 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles4, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*3, particles->step );
+    // Beta5
+    particles5 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles5, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*4, particles->step );
+    // Beta6
+    particles6 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles6, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*5, particles->step );
+    // Beta7
+    particles7 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles7, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*6, particles->step );
+    // likelihood
+    particles8 = cvCreateMatHeader( 1,nParticles, CV_32FC1);
+    cvInitMatHeader( particles8, 1, nParticles, CV_32FC1, particles->data.ptr + particles->step*7, particles->step );
+
+    //theta1-theta7
+    particles1to7 = cvCreateMatHeader( 7,nParticles, CV_32FC1);
+    cvInitMatHeader( particles1to7, 7, nParticles, CV_32FC1, particles->data.ptr, particles->step );
 
 
     newParticles=cvCreateMat(8,nParticles,CV_32FC1);
@@ -149,21 +149,22 @@ bool handPoseEstimationModule::initSMC()
     //initialize Theta2
     cvRandArr( &rngState, particles2, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
     //initialize Theta3
-	cvRandArr( &rngState, particles3, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+    cvRandArr( &rngState, particles3, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
     //initialize Theta4
-	cvRandArr( &rngState, particles4, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
-	//initialize Theta5
-	cvRandArr( &rngState, particles5, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
-	//initialize Theta6
-	cvRandArr( &rngState, particles6, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
-	//initialize Theta7
-	cvRandArr( &rngState, particles7, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+    cvRandArr( &rngState, particles4, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+    //initialize Theta5
+    cvRandArr( &rngState, particles5, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+    //initialize Theta6
+    cvRandArr( &rngState, particles6, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+    //initialize Theta7
+    cvRandArr( &rngState, particles7, CV_RAND_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
 
     // Artificial Noise Initialization
     artifNoiseStdDev = initialArtificialNoiseStdDev;
     // Setting first particle as Zero offset    
-    for (unsigned int joint=0;joint<8;joint++) {
-            cvmSet(particles,joint,0,0.0);
+    for (unsigned int joint=0;joint<8;joint++) 
+    {
+        cvmSet(particles,joint,0,0.0);
     }
     return true;
 }
@@ -184,23 +185,28 @@ bool handPoseEstimationModule::runSMCIteration()
     yarpReturnImage.resize(concatenatedImage.cols,concatenatedImage.rows);
     concatenatedImage.copyTo( cvarrToMat( static_cast<IplImage*> ( yarpReturnImage.getIplImage() ) ) );
     // Fill Bottle with offsets+encoders to generate
-    for(int index=0;index < nParticles;index++) {
+    for(int index=0;index < nParticles;index++) 
+    {
         // Arm + offsets
-        for (unsigned int joint=0;joint<7;joint++) {
+        for (unsigned int joint=0;joint<7;joint++) 
+        {
             outputParticles.addDouble(encodersArm[joint]+cvmGet(particles,joint,index));
-            if(index==0){
+            if(index==0)
+            {
                 yInfo() << cvmGet(particles,joint,index);
             }
         }
         // Fingers
-        for(unsigned int joint=7;joint<16;joint++) {
+        for(unsigned int joint=7;joint<16;joint++) 
+        {
             outputParticles.addDouble(encodersArm[joint]);
         }
     }
     outputParticles.addInt(nParticles); // n_particles
 
     // Fill Bottle with head encoders
-    for(int k=0;k<6;k++){
+    for(int k=0;k<6;k++)
+    {
         outputHead.addDouble(encodersHead[k]);
     }
 
@@ -211,70 +217,77 @@ bool handPoseEstimationModule::runSMCIteration()
 
     // Waitint for results
     yInfo("Waiting for Hypotheses generation and evaluation");
-	Bottle *receivedLikelihood = likelihoodPort.read();
-	yInfo(" DONE");
+    Bottle *receivedLikelihood = likelihoodPort.read();
+    yInfo(" DONE");
     
     // Save the likelihood of each particle
-	for(int index=0;index<nParticles;index++) {
-		likelihood = receivedLikelihood->pop().asDouble();
-		cvmSet(particles,7,index,likelihood);
-		sumLikelihood+=likelihood;
-        if(likelihood>maxLikelihood) {
-			maxLikelihood=likelihood;
-		}
-	}
+    for(int index=0;index<nParticles;index++) 
+    {
+        likelihood = receivedLikelihood->pop().asDouble();
+        cvmSet(particles,7,index,likelihood);
+        sumLikelihood+=likelihood;
+        if(likelihood>maxLikelihood) 
+        {
+            maxLikelihood=likelihood;
+        }
+    }
     cvmSet(particles,7,0,0.0);
     kernelDensityEstimation();
 
 
-	yInfo("Best likelihood: %f", (float) cvmGet(particles,7,maxWeightIndex));
+    yInfo("Best likelihood: %f", (float) cvmGet(particles,7,maxWeightIndex));
 
-    if(iteration>minimumIteration) {// START sending offsets
+    if(iteration>minimumIteration) // START sending offsets
+    {
         // Send Best Particle
         Bottle &bestOffset = offsetsPort.prepare();
         bestOffset.clear();
-	    for(int i=0;i<7;i++) {
-            
-		       bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
-	    }
+        for(int i=0;i<7;i++) 
+        {
+            bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
+        }
         lastBestOffset.clear();
         lastBestOffset = bestOffset;
-	    bestOffset.addDouble(iteration);
-	    offsetsPort.write();
+        bestOffset.addDouble(iteration);
+        offsetsPort.write();
     }
     // Resampling or not Resampling. That's the Question
 
-    if(maxLikelihood>minimumLikelihood) {
-	    systematic_resampling(particles1to7,particles8,newParticles,cumWeight, sumLikelihood);
-	    artifNoiseStdDev=artifNoiseStdDev*decreasedMultiplier;
+    if(maxLikelihood>minimumLikelihood) 
+    {
+        systematic_resampling(particles1to7,particles8,newParticles,cumWeight, sumLikelihood);
+        artifNoiseStdDev=artifNoiseStdDev*decreasedMultiplier;
     }
-
-    else { //I can't apply a resampling with all weights equal to 0! 
-	    cvCopy(particles,newParticles);
-	    artifNoiseStdDev=artifNoiseStdDev*increasedMultiplier;
+    else  //I can't apply a resampling with all weights equal to 0! 
+    {
+        cvCopy(particles,newParticles);
+        artifNoiseStdDev=artifNoiseStdDev*increasedMultiplier;
     }
-    if(artifNoiseStdDev > upperBoundNoise)
-	    artifNoiseStdDev = upperBoundNoise;
-
+    if(artifNoiseStdDev > upperBoundNoise) 
+    {
+       artifNoiseStdDev = upperBoundNoise;
+    }
     // Apply artificial Dynamics
 
    	CvMat* A = cvCreateMat(8,8,CV_32FC1);
-	cvSetIdentity(A); //
+    cvSetIdentity(A); //
     cvMatMul(A,newParticles,particles);
 
     float mean = 0;
     CvMat* noiseSingle;
     noiseSingle = cvCreateMat(1,nParticles,CV_32FC1);
     cvSetZero(noiseSingle);
-    if(artifNoiseStdDev < lowerBoundNoise) { // lowerbound of artificial noise
-	    artifNoiseStdDev = lowerBoundNoise;
+    if(artifNoiseStdDev < lowerBoundNoise)  // lowerbound of artificial noise
+    {
+        artifNoiseStdDev = lowerBoundNoise;
     }
     cvRandArr( &rngState, noise, CV_RAND_NORMAL, cvScalar(mean), cvScalar(artifNoiseStdDev));
     cvAdd(particles1to7,noise,particles1to7);
     yInfo() << "ArtNoise: " << artifNoiseStdDev;
     // Setting first particle as Zero offset
-    for (unsigned int joint=0;joint<8;joint++) {
-            cvmSet(particles,joint,0,0.0);
+    for (unsigned int joint=0;joint<8;joint++) 
+    {
+        cvmSet(particles,joint,0,0.0);
     }
     
     return true;
@@ -284,33 +297,36 @@ void handPoseEstimationModule::kernelDensityEstimation()
 {
     // Particle i
     double maxWeight = 0.0;
-	for(int iParticle=0;iParticle<nParticles;iParticle++) {
-		double sum1=0.0;
+    for(int iParticle=0;iParticle<nParticles;iParticle++) 
+    {
+        double sum1=0.0;
         // Particle j
-		for(int jParticle=0;jParticle<nParticles;jParticle++) {
-			double sum2=0.0;
-			if( (float) cvmGet(particles,7,jParticle) > 0 ) {
+        for(int jParticle=0;jParticle<nParticles;jParticle++) 
+        {
+            double sum2=0.0;
+            if( (float) cvmGet(particles,7,jParticle) > 0 ) 
+            {
                 // Beta 0..to..6
-				for(int joint=0;joint<7;joint++) {
-					// || pi-pj||^2 / KDEStdDev^2
-					sum2+= pow( ((float)cvmGet(particles,joint,jParticle)-(float)cvmGet(particles,joint,iParticle)) ,2)/pow(KDEStdDev,2); //Multivariate normal distribution
-				}
-				sum1 += std::exp(-sum2/( 2) )*cvmGet(particles,7,jParticle);
-			}
-		}
-		sum1 = sum1/(nParticles*sqrt(pow(2*M_PI,1)*pow(KDEStdDev,7)));
-		double weight = 500*sum1 + cvmGet(particles,7,iParticle);
-		if(weight>maxWeight) {
-			maxWeightIndex=iParticle;
+                for(int joint=0;joint<7;joint++) 
+                {
+                    // || pi-pj||^2 / KDEStdDev^2
+                    sum2+= pow( ((float)cvmGet(particles,joint,jParticle)-(float)cvmGet(particles,joint,iParticle)) ,2)/pow(KDEStdDev,2); //Multivariate normal distribution
+                }
+                sum1 += std::exp(-sum2/( 2) )*cvmGet(particles,7,jParticle);
+            }
+        }
+        sum1 = sum1/(nParticles*sqrt(pow(2*M_PI,1)*pow(KDEStdDev,7)));
+        double weight = 500*sum1 + cvmGet(particles,7,iParticle);
+        if(weight>maxWeight) 
+        {
+            maxWeightIndex=iParticle;
             maxWeight = weight;
-		}
-
+        }
    }
 }
 /******************************************************************************************/
 bool handPoseEstimationModule::systematic_resampling(CvMat* oldParticlesState, CvMat* oldParticlesWeights, CvMat* newParticlesState, CvMat* cumWeight, float sum2)
-{																								
-
+{
     double u; //random number [0,1)
     double sum;
     int c1;
@@ -327,15 +343,14 @@ bool handPoseEstimationModule::systematic_resampling(CvMat* oldParticlesState, C
     //oldParticlesWeight = oldParticlesWeight / sum(oldParticlesWeight);
     sum=0;
 
-    for(c1=0;c1<nParticles;c1++)
+    for(c1=0;c1<nParticles;c1++) 
     {
         ((float*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1] = (((float*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1])/(float)sum2;
     }
-	    for(c1=0;c1<nParticles;c1++)
+    for(c1=0;c1<nParticles;c1++) 
     {
         sum+=((float*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1];
     }
-
 
     //%GENERATE N RANDOM VALUES
     //u = rand(1)/N; %random value [0,1/N)
@@ -346,24 +361,14 @@ bool handPoseEstimationModule::systematic_resampling(CvMat* oldParticlesState, C
     //%randomVector(a)= (a-1)/N+u.
 
     ((float*)(cumWeight->data.ptr))[0]=0.0;
-    for(c1=0;c1<nParticles;c1++)
+    for(c1=0;c1<nParticles;c1++) 
     {
-
         ((float*)(cumWeight->data.ptr))[c1+1]=((float*)(cumWeight->data.ptr))[c1]+((float*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1];
-
     }
 
-    if(((float*)(cumWeight->data.ptr))[nParticles]!=1)
+    if(((float*)(cumWeight->data.ptr))[nParticles]!=1) 
     {
         ((float*)(cumWeight->data.ptr))[nParticles]=1;
-        if( ((float*)(cumWeight->data.ptr))[nParticles]!=1)
-        {
-            //printf("still different\n");
-        }
-        else
-        {
-            //printf("now it-s ok\n");
-        }
     }
 
     //%PERFORM THE ACTUAL RESAMPLING
@@ -371,34 +376,30 @@ bool handPoseEstimationModule::systematic_resampling(CvMat* oldParticlesState, C
     cIndex=1; //index of the cumulative weight array. cIndex -1 indicates which particle we think of resampling.
     npIndex=0; //new particle index, tells me how many particles have been created so far.
 
-    while(npIndex < nParticles)
+    while(npIndex < nParticles) 
     {
-
-        if(((float*)(cumWeight->data.ptr))[cIndex]>=(double)rIndex/(double)nParticles+u) 
-        {
-
+        if(((float*)(cumWeight->data.ptr))[cIndex]>=(double)rIndex/(double)nParticles+u) {
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*0))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*0))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*1))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*1))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*2))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*2))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*3))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*3))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*4))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*4))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*5))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*5))[cIndex-1];
-			((float*)(newParticlesState->data.ptr + newParticlesState->step*6))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*6))[cIndex-1];
+            ((float*)(newParticlesState->data.ptr + newParticlesState->step*6))[npIndex]=((float*)(oldParticlesState->data.ptr + oldParticlesState->step*6))[cIndex-1];
             ((float*)(newParticlesState->data.ptr + newParticlesState->step*7))[npIndex]=0; //initializing weight
             rIndex=rIndex+1;
             npIndex=npIndex+1;
         }
-        else
+        else 
         {
             cIndex=cIndex+1;
         }
     }
-    
-    return false;        
+    return false;
 }
 /******************************************************************************************/
-void handPoseEstimationModule::mergeAndFlipImages(){// Merge Right and Left cameras
-
+void handPoseEstimationModule::mergeAndFlipImages()// Merge Right and Left cameras
+{
     cv::hconcat(imageProcL, imageProcR,concatenatedImage);
     cv::flip(concatenatedImage,concatenatedImage,0);
     cvtColor(concatenatedImage,concatenatedImage,CV_GRAY2BGR);
@@ -407,17 +408,18 @@ void handPoseEstimationModule::mergeAndFlipImages(){// Merge Right and Left came
 bool handPoseEstimationModule::updateModule()
 {
    
-	if(imageInputPortR.getInputCount()<=0 || imageInputPortL.getInputCount()<=0 || armPort.getInputCount()<=0 || headPort.getInputCount()<=0) {
+    if(imageInputPortR.getInputCount()<=0 || imageInputPortL.getInputCount()<=0 || armPort.getInputCount()<=0 || headPort.getInputCount()<=0) 
+    {
         yInfo(" Waiting for external connections...");
         Time::delay(0.5);
         return !closing;
     }
-    if(stopped)
+    if(stopped) 
     {
         yInfo("Module Stopped");
         return !closing;
     }    
-    else if(paused)
+    else if(paused) 
     {
         yInfo("Module paused");
         return !closing;
@@ -425,17 +427,18 @@ bool handPoseEstimationModule::updateModule()
     Time time;
     double timing2=time.now();
 
-	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iR = imageInputPortR.read(false);  // read an image R
-	yarp::sig::ImageOf<yarp::sig::PixelBgr> *iL = imageInputPortL.read(false); // read an image L
+    yarp::sig::ImageOf<yarp::sig::PixelBgr> *iR = imageInputPortR.read(false);  // read an image R
+    yarp::sig::ImageOf<yarp::sig::PixelBgr> *iL = imageInputPortL.read(false); // read an image L
 
-    if (iR==NULL || iL ==NULL) { // empty images
-        return !closing;    
+    if (iR==NULL || iL ==NULL)  // empty images
+    {
+        return !closing;
     }
 
     yInfo("Iteration: %d", iteration);
-	iteration++;
+    iteration++;
     imageR=cvarrToMat(static_cast<IplImage*> (iR->getIplImage()));
-	imageL=cvarrToMat(static_cast<IplImage*> (iL->getIplImage()));
+    imageL=cvarrToMat(static_cast<IplImage*> (iL->getIplImage()));
     Mat tmp;
     tmp= imageL.clone();
     // Read Encoders
@@ -444,9 +447,9 @@ bool handPoseEstimationModule::updateModule()
     imageProcR = processImages(imageR);
     imageProcL = processImages(imageL);
     mergeAndFlipImages();
-    yInfo() << encodersArm.toString().c_str();   
+    yInfo() << encodersArm.toString().c_str();
     runSMCIteration();
- 
+
     Scalar red(0,0,255); //RED
     Scalar green(0,255,0); //GREEN
     Scalar blue(255,0,0); //BLUE
@@ -455,39 +458,40 @@ bool handPoseEstimationModule::updateModule()
     Point fingerP;
     Bottle* fingers = fingers_port.read(false);
     if(fingers==NULL)
-        return !closing;    
+    {
+        return !closing;
+    }
     if(fingers->size() ==0)
     {
-	    cout << "empty fingers" << endl;
+        cout << "empty fingers" << endl;
     }
     int init = (nParticles-1-maxWeightIndex)*12;
     deque<cv::Point> point_f;
     for( int i = init;i< init + 12; i++) 
     {
-    	if(i%2 == 0) 
+        if(i%2 == 0) 
         {
-    		fingerP.x = (int) fingers->get(i).asDouble();
-    		//cout << "x: " << fingers->get(i).asDouble() << endl;
-    	}
-	    else 
+           fingerP.x = (int) fingers->get(i).asDouble();
+           //cout << "x: " << fingers->get(i).asDouble() << endl;
+        }
+        else 
         {
-		    fingerP.y = (int) (240- fingers->get(i).asDouble());
-		    cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
+            fingerP.y = (int) (240- fingers->get(i).asDouble());
+            cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
             point_f.push_front(fingerP);
-		    if(i==init+1) // index
-		        circle(imageL,fingerP,5,red,-1);
-		    if(i==init+3) // little
-		        circle(imageL,fingerP,5,color,-1);
+            if(i==init+1) // index
+                circle(imageL,fingerP,5,red,-1);
+            if(i==init+3) // little
+                circle(imageL,fingerP,5,color,-1);
             if(i==init+5) // middle
-		        circle(imageL,fingerP,5,yellow,-1);
+                circle(imageL,fingerP,5,yellow,-1);
             if(i==init+7) // ring
-		        circle(imageL,fingerP,5,color,-1);
-		    if(i==init+9) // thumb
-		        circle(imageL,fingerP,5,green,-1);
-		    if(i==init+11) // EndEffector
-		        circle(imageL,fingerP,5,blue,-1);
-
-	    }
+                circle(imageL,fingerP,5,color,-1);
+            if(i==init+9) // thumb
+                circle(imageL,fingerP,5,green,-1);
+            if(i==init+11) // EndEffector
+                circle(imageL,fingerP,5,blue,-1);
+        }
     }
     for( int k = 0; k<6;k++) 
     {
@@ -498,31 +502,30 @@ bool handPoseEstimationModule::updateModule()
     init = (nParticles-1)*12;
     for( int i = init;i< init + 12; i++) 
     {
-    	if(i%2 == 0) 
+        if(i%2 == 0) 
         {
-    		fingerP.x = (int) fingers->get(i).asDouble();
-    	}
-	    else 
+           fingerP.x = (int) fingers->get(i).asDouble();
+        }
+        else 
         {
-		    fingerP.y = (int) (240- fingers->get(i).asDouble());
-		    cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
+            fingerP.y = (int) (240- fingers->get(i).asDouble());
+            cout << "fingerTips: x:" << fingerP.x << " y: "<< fingerP.y << endl;
             point_f.push_front(fingerP);
-		    if(i!=init+9 && i!=init+11)
-		    circle(tmp,fingerP,5,color,-1);
-		    if(i==init+1) // index
-		        circle(tmp,fingerP,5,red,-1);
-		    if(i==init+3) // little
-		        circle(tmp,fingerP,5,color,-1);
+            if(i!=init+9 && i!=init+11)
+            circle(tmp,fingerP,5,color,-1);
+            if(i==init+1) // index
+                circle(tmp,fingerP,5,red,-1);
+            if(i==init+3) // little
+                circle(tmp,fingerP,5,color,-1);
             if(i==init+5) // middle
-		        circle(tmp,fingerP,5,yellow,-1);
+                circle(tmp,fingerP,5,yellow,-1);
             if(i==init+7) // ring
-		        circle(tmp,fingerP,5,color,-1);
-		    if(i==init+9) // thumb
-		        circle(tmp,fingerP,5,green,-1);
-		    if(i==init+11) // EndEffector
-		        circle(tmp,fingerP,5,blue,-1);
-
-	    }
+                circle(tmp,fingerP,5,color,-1);
+            if(i==init+9) // thumb
+                circle(tmp,fingerP,5,green,-1);
+            if(i==init+11) // EndEffector
+                circle(tmp,fingerP,5,blue,-1);
+        }
     }
     for( int k = 0; k<6;k++) 
     {
@@ -553,10 +556,10 @@ Mat handPoseEstimationModule::processImages(Mat inputImage)
     cvtColor(inputImage,edges,CV_RGB2GRAY);
 
     // Image
-	blur( edges, edges, Size(3,3) );
-	Canny(edges,edges,65,3*65,3);
+    blur( edges, edges, Size(3,3) );
+    Canny(edges,edges,65,3*65,3);
     threshold(edges,edges,100,255,THRESH_BINARY_INV);
-	distanceTransform(edges,dtImage,CV_DIST_L2,CV_DIST_MASK_5);
+    distanceTransform(edges,dtImage,CV_DIST_L2,CV_DIST_MASK_5);
     cvtColor(dtImage,dtImage2,CV_GRAY2BGR);
     dtImage.convertTo(dtImage2_8,CV_8UC3);
     return dtImage2_8;
@@ -573,7 +576,8 @@ bool handPoseEstimationModule::readArmJoints()
     char * pch;
     pch = strtok ( (char*) str," ");
     int i=0;
-    while (pch != NULL) {
+    while (pch != NULL) 
+    {
         //printf ("%s\n",pch);
         encodersArm[i]=atof(pch);
         pch = strtok (NULL, " ");
@@ -591,7 +595,8 @@ bool handPoseEstimationModule::readHeadJoints()
     char * pch;
     pch = strtok ( (char*) str," ");
     int i=0;
-    while (pch != NULL) {
+    while (pch != NULL) 
+    {
         //printf ("%s\n",pch);
         encodersHead[i]=atof(pch);
         pch = strtok (NULL, " ");
