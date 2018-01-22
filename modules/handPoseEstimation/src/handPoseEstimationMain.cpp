@@ -7,6 +7,12 @@
  *
  */
 
+/**
+*
+* \file handPoseEstimationMain.cpp
+*
+* \author Pedro Vicente
+*/
 
 #include <yarp/os/Network.h>
 #include <yarp/os/RFModule.h>

@@ -14,8 +14,7 @@
 *
 *
 *
-*
-*
+* \file handPoseEstimationModule.h
 *
 *
 * \note <b>If you're going to use this module for your work, please

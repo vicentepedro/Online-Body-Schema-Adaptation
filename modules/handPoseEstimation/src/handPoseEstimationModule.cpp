@@ -6,7 +6,12 @@
  * CopyPolicy: Released under the terms of the GNU GPL v3.0.
  *
  */
-
+/**
+*
+* \file handPoseEstimationModule.cpp
+*
+* \author Pedro Vicente
+*/
 
 #include "handPoseEstimationModule.h"
 using namespace yarp::os;
