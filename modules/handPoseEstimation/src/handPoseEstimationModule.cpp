@@ -30,7 +30,7 @@ bool handPoseEstimationModule::configure(ResourceFinder &rf)
     initialMean = rf.check("initialMean", Value(0.0)).asDouble();    
     initialStdDev= rf.check("initialStdDev", Value(3.5)).asDouble();
     initialArtificialNoiseStdDev = rf.check("artificialNoiseStdDev", Value(3.0)).asDouble();
-    // artifNoiseStdDev = initialArtificialNoiseStdDev; 
+ 
     lowerBoundNoise = rf.check("lowerBound", Value(0.04)).asDouble();//
     upperBoundNoise = rf.check("upperBound", Value(3.5)).asDouble();//
     increasedMultiplier = rf.check("increaseMultiplier", Value(1.2)).asDouble();//
@@ -472,7 +472,6 @@ bool handPoseEstimationModule::updateModule()
         if(i%2 == 0) 
         {
            fingerP.x = (int) fingers->get(i).asDouble();
-           //cout << "x: " << fingers->get(i).asDouble() << endl;
         }
         else 
         {
@@ -578,7 +577,6 @@ bool handPoseEstimationModule::readArmJoints()
     int i=0;
     while (pch != NULL) 
     {
-        //printf ("%s\n",pch);
         encodersArm[i]=atof(pch);
         pch = strtok (NULL, " ");
         i++;
@@ -597,7 +595,6 @@ bool handPoseEstimationModule::readHeadJoints()
     int i=0;
     while (pch != NULL) 
     {
-        //printf ("%s\n",pch);
         encodersHead[i]=atof(pch);
         pch = strtok (NULL, " ");
         i++;
