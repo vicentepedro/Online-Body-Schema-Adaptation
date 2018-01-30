@@ -71,7 +71,7 @@ The software architecture implementing the proposed eye-hand calibration solutio
   - Open the cmake-gui executable
     - On the section:
 
-      `where is the source code `
+      `where is the source code`
 
       insert the path (absolute path):
 
@@ -99,14 +99,14 @@ The software architecture implementing the proposed eye-hand calibration solutio
     - set CudacompareEdge2 as the Startup project
     - and build the project.
 
-    You should have now a CudacompareEdge2.dll file inside the Release folder.
+    You should have now a *CudacompareEdge2.dll* file inside the Release folder.
 
 - Robot's Internal Model:
   - One can use the compile version (icub-internalmodel-rightA-cam-Lisbon)
-  - After compiling the YARP c# bindings, copy the `yarp.dll` to the folder:
+  - After compiling the YARP c# bindings, copy the *yarp.dll* to the folder:
 
     /modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon_Data/Plugins/ 
-  - copy also the `CudacompareEdge2.dll` to the above-mentioned folder.
+  - copy also the *CudacompareEdge2.dll* to the above-mentioned folder.
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
