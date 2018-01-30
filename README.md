@@ -27,7 +27,7 @@ The software architecture implementing the proposed eye-hand calibration solutio
 
 <p align="center" > <img src="./misc/UML_robot.png" width=600 > </p>
 
-[Go to the top](#online-body-schema-adaptation-and-markerless-eye-hand-kinematic-calibration)
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 ## Dependencies
 - HandPoseEstimation Module:
   - YARP
@@ -46,6 +46,8 @@ The software architecture implementing the proposed eye-hand calibration solutio
   - Likelihood Assessment Module
   - YARP
   - YARP C# bindings [intructions](http://www.yarp.it/yarp_swig.html#yarp_swig_windows )
+
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
 ## How to install
 
@@ -106,12 +108,15 @@ The software architecture implementing the proposed eye-hand calibration solutio
     /modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon_Data/Plugins/ 
   - copy also the `CudacompareEdge2.dll` to the above-mentioned folder.
 
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
+
 ## Running the Modules
 
 Please refer to the documention:
 
 http://vicentepedro.github.io/Online-Body-Schema-Adaptation/doxygen/doc/html/How_to_use.html
 
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 ## Results and Dataset
 
 In the following figures can be seen the projection of the fingertips on the left camera on simulated robot experiments. The <font color="blue"> blue </font> dot represents the end-effector projection (i.e. base of the middle finger), the  <font color="red">red </font> represents the index fingertip, the <font color="gree"> green </font> the thumb fingertip, the <font color="gold"> dark yellow </font> the middle fingertip and the <font color="Khaki"> soft yellow </font>the ring and little fingertips.
@@ -125,8 +130,12 @@ The simulated results presented here were acquired on the following Dataset:
 
 [Dataset](https://github.com/vicentepedro/eyeHandCalibrationDataset-Sim)
 
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
+
 # Documentation
 http://vicentepedro.github.com/Online-Body-Schema-Adaptation 
+
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
 # Final notes
 
@@ -145,3 +154,5 @@ For more details see the following references:
     ISSN={2296-9144}
     
 The full article can be found [here](https://doi.org/10.3389/frobt.2016.00007)
+
+[`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
