@@ -138,6 +138,7 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
     cv::gpu::cvtColor(gpuMat_R,GgpuMat_R,CV_RGB2GRAY);  
 
     float result=0;
+    int lambdaEdge = 25; 
     for(int i=0;i<200;i++) 
     {
         gltex = (GLuint)(size_t)(ID[i]);
@@ -172,13 +173,17 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
         
         cv::Scalar sumS = cv::gpu::sum(GpuMatMul);
 
-        sum = sumS[0]*25; // Distance between 0 and 15 instead of 0-1 or 0-25
+        /*
+        Check the article:
+        Online Body Schema Adaptation Based on Internal Mental Simulation and Multisensory Feedback, Vicente et al.
+        In particular, Equation (21)
+        */
+        sum = sumS[0]*lambdaEdge; // lambdaEdge is a tuning parameter for distance sensitivity 
         
         nonZero = (float) cv::gpu::countNonZero(GgpuMat); //gerada
-        zero = GgpuMat_R.cols*GgpuMat_R.rows - (float) cv::gpu::countNonZero(GgpuMat_R); // real
         if(nonZero==0) 
         {
-            likelihood[i] = 0;
+            likelihood[i] = 0.000000001; // Almost Zero
         }
         else 
         {
