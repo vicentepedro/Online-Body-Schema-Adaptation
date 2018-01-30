@@ -8,18 +8,18 @@ The agent can calibrate its eye-hand kinematic chain without any markers which, 
 - [Dependencies & how to install](#dependencies)
 - [Running the Modules](#running-the-modules)
 - [Results & Dataset](#results-and-dataset)
-- [Documentaion & more](#documentation)
+- [Documentation & more](#documentation)
 
 ## Repository Organization:
 The code is divided into three logical components: i) the hand pose estimation, ii) the Robot’s Internal Model generator, and iii) the likelihood assessment, which are implemented, respectively, at the following repository locations:
-### modules/handPoseEstimation:
+- modules/handPoseEstimation:
    - include/handPoseEstimationModule.h
    - src/handPoseEstimationMain.cpp
    - src/handPoseEstimationModule.cpp
-### modules/internalmodel:
+- modules/internalmodel:
    - icub-internalmodel-rightA-cam-Lisbon.exe
    - icub-internalmodel-leftA-cam-Lisbon.exe
-### modules/likelihodAssessment:
+- modules/likelihodAssessment:
    - src/Cuda_Gl.cu
    - src/likelihood.cpp
 
@@ -45,7 +45,7 @@ The software architecture implementing the proposed eye-hand calibration solutio
   - Windows Machine
   - Likelihood Assessment Module
   - YARP
-  - YARP C# bindings [intructions](http://www.yarp.it/yarp_swig.html#yarp_swig_windows )
+  - YARP C# bindings [instructions](http://www.yarp.it/yarp_swig.html#yarp_swig_windows )
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
@@ -84,9 +84,9 @@ The software architecture implementing the proposed eye-hand calibration solutio
 
       /Online-Body-Schema-Adaptation/modules/likelihoodAssessment/build 
 
-      and press the configure button, choosing your the 32 bit version of your compiler.
+    - press the configure button, choosing the version of your 32 bit  compiler.
 
-      The variable `CUDA_SDK_ROOT_DIR` will appear and should point to:
+    - The variable `CUDA_SDK_ROOT_DIR` will appear and should point to:
 
       C:\ProgramData\NVIDIA Corporation\CUDA Samples\v6.5\common 
 
@@ -112,19 +112,19 @@ The software architecture implementing the proposed eye-hand calibration solutio
 
 ## Running the Modules
 
-Please refer to the documention:
+Please refer to the documentation:
 
 http://vicentepedro.github.io/Online-Body-Schema-Adaptation/doxygen/doc/html/How_to_use.html
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 ## Results and Dataset
 
-In the following figures can be seen the projection of the fingertips on the left camera on simulated robot experiments. The <font color="blue"> blue </font> dot represents the end-effector projection (i.e. base of the middle finger), the  <font color="red">red </font> represents the index fingertip, the <font color="gree"> green </font> the thumb fingertip, the <font color="gold"> dark yellow </font> the middle fingertip and the <font color="Khaki"> soft yellow </font>the ring and little fingertips.
+In the following figures the projection of the fingertips on the left camera of simulated robot experiments can be seen. The <font color="blue"> blue </font> dot represents the end-effector projection (i.e. base of the middle finger), the  <font color="red">red </font> represents the index fingertip, the <font color="gree"> green </font> the thumb fingertip, the <font color="gold"> dark yellow </font> the middle fingertip and the <font color="Khaki"> soft yellow </font>the ring and little fingertips.
 The first image (a) is the canonical projection (i.e, with all angular offsets equal Zero) and on the second image (b) with the estimated offsets from the proposed method.
 
-<p align="center" > <img src="./misc/canonical_sim.png" width=300 > </p>
+<p align="center" > <img src="./misc/canonical_sim.png" width=400 > </p>
 <p align="center" >(a) Canonical Finger Projection - based on the encoders</p>
-<p align="center" > <img src="./misc/corrected_sim.png" width=300 > </p>
+<p align="center" > <img src="./misc/corrected_sim.png" width=400 > </p>
 <p align="center" >(b) Corrected Finger Projection - based on the encoders and estimated angular Offsets</p>
 
 The simulated results presented here were acquired on the following Dataset:
