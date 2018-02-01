@@ -37,5 +37,5 @@ extern "C" void DeviceArrayCopyFromTexture( float3* dst, int dstStep, int width,
 
 extern "C" void BindToTexture( cudaArray *cuArr )
 {
-     checkCudaErrors( cudaBindTextureToArray( inTex, cuArr ) );
+    checkCudaErrors( cudaBindTextureToArray( inTex, cuArr ) );
 }

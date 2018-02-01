@@ -12,6 +12,7 @@
 * \file handPoseEstimationMain.cpp
 *
 * \author Pedro Vicente
+* \copyright  Released under the terms of the GNU GPL v3.0.
 */
 
 #include <yarp/os/Network.h>

@@ -45,7 +45,7 @@ using namespace std;
 * Version: v2.0 
 * \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
 * \n
-* \copyright  License terms, for example: released under the terms of the GNU GPL v3.0 .
+* \copyright  Released under the terms of the GNU GPL v3.0.
 */
 
 /**
@@ -54,6 +54,7 @@ using namespace std;
 *
 * Version: v2.0 
 * \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
+* \file likelihood.cpp
 * \n
 * \copyright  License terms, for example: released under the terms of the GNU GPL v3.0 .
 */

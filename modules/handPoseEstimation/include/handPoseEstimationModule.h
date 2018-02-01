@@ -24,6 +24,7 @@
 *
 *
 * \author Pedro Vicente
+* \copyright  Released under the terms of the GNU GPL v3.0.
 */
 #ifndef _HPESTIMATION_
 #define _HPESTIMATION_

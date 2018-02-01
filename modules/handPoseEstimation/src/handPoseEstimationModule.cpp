@@ -11,6 +11,7 @@
 * \file handPoseEstimationModule.cpp
 *
 * \author Pedro Vicente
+* \copyright  Released under the terms of the GNU GPL v3.0.
 */
 
 #include "handPoseEstimationModule.h"
