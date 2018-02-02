@@ -66,8 +66,8 @@ http://vicentepedro.github.io/Online-Body-Schema-Adaptation/doxygen/doc/html/How
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 ## Results and Dataset
 
-In the following figures the projection of the fingertips on the left camera of simulated robot experiments can be seen. The <font color="blue"> blue </font> dot represents the end-effector projection (i.e. base of the middle finger), the  <font color="red">red </font> represents the index fingertip, the <font color="gree"> green </font> the thumb fingertip, the <font color="gold"> dark yellow </font> the middle fingertip and the <font color="Khaki"> soft yellow </font>the ring and little fingertips.
-The first image (a) is the canonical projection (i.e, with all angular offsets equal Zero) and on the second image (b) with the estimated offsets from the proposed method.
+The following figures show the projection of the fingertips on the left camera during simulated robot experiments. The <font color="blue"> blue </font> dot represents the end-effector projection ( *i.e.*, base of the middle finger), the  <font color="red">red </font> represents the index fingertip, the <font color="gree"> green </font> the thumb fingertip, the <font color="gold"> dark yellow </font> the middle fingertip and the <font color="Khaki"> light yellow </font>the ring and little fingertips.
+The first image (a) is the canonical projection (*i.e.*, with all angular offsets equal to zero) and on the second image (b) with the estimated offsets from the proposed method.
 
 <p align="center" > <img src="./images/canonical_sim.png" width=400 > </p>
 <p align="center" >(a) Canonical Finger Projection - based on the encoders</p>
@@ -85,11 +85,9 @@ http://vicentepedro.github.com/Online-Body-Schema-Adaptation
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
-# Final notes
+# References
 
-The internal model module only runs on windows machines.
-
-For more details see the following references:
+If you use this code please cite the following reference:
 
     @ARTICLE{10.3389/frobt.2016.00007,
     AUTHOR={Vicente, Pedro  and  Jamone, Lorenzo  and  Bernardino, Alexandre},
