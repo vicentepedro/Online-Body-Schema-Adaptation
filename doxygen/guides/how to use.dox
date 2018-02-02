@@ -1,0 +1,52 @@
+/**
+*
+* \page how_to_use How to run the modules
+* How to run the modules guide
+*
+* \section internalmodel Running the internal model
+*
+* Open a terminal and execute the internal model:
+* \code icub-internalmodel-rightA-cam-Lisbon.exe -force-opengl \endcode
+* The internal model should start showing a high FPS value (depending on your machine)
+*
+*
+* \section with_dataset Testing with the Dataset
+*
+* Open a yarpdataplayer
+* \code yarpdataplayer \endcode
+* and choose the root folder of the [dataset](https://github.com/vicentepedro/eyeHandCalibrationDataset-Sim).
+*
+* Open a yarpmanager
+* \code yarpmanager \endcode
+* and open the XML file:
+* \code app/scripts/OnlineBodySchemaAdaptation-dataset.xml \endcode
+* NOTE: If you do not have ICUBContrib or a make install, the handPoseEstimation will not be found by yarpmanager, you can run it on a terminal on the respective build/bin folder.
+*
+* You should have a yarpmanager similar to this:
+*
+* \image html yarpmanager.png
+*
+* Push the run button <B> (1) </B> . (and the three modules should appear green)
+*
+* Connected the ports <B> (2) </B>.
+* 
+* Open a terminal and type:
+* \code yarp rpc /hpe/rpc:i \endcode
+* \b Then, you can type 
+* \code help \endcode
+* to see the options available, but the most important command is:
+* \code start \endcode
+* and the superimposed fingertips will appear on the two yarpviews.
+*
+* \section without_dataset Testing with another robot
+* Edit the template:
+* \code OnlineBodySchemaAdaptation.xml.template\endcode
+* in particular the connection between the both left and right cameras and the head and arm encoders.
+* Open the XML with yarpmanager
+* \code yarpmanager \endcode
+* After running the modules and connecting the ports, follow the same procedure has the testing with the Dataset section.
+*
+* \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
+* \n
+*  \copyright  Released under the terms of the GNU GPL v3.0.
+*/

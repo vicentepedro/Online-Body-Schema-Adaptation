@@ -1,0 +1,266 @@
+\section{hand\+Pose\+Estimation\+\_\+\+I\+DL Class Reference}
+\label{classhandPoseEstimation__IDL}\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+
+
+\hyperlink{classhandPoseEstimation__IDL}{hand\+Pose\+Estimation\+\_\+\+I\+DL} I\+DL Interface to \hyperlink{group__handPoseEstimation-module}{hand\+Pose\+Estimation-\/module} services.  
+
+
+
+
+{\ttfamily \#include $<$hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+h$>$}
+
+Inheritance diagram for hand\+Pose\+Estimation\+\_\+\+I\+DL\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classhandPoseEstimation__IDL}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classhandPoseEstimation__IDL_a0168a812d2209bba67212dc2969bc763}{start} ()
+\begin{DoxyCompactList}\small\item\em Start (re-\/start) the hand pose estimation. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classhandPoseEstimation__IDL_a9d3f8b39a34db325c89b2c7b44ded1f1}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop the hand pose estimation. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classhandPoseEstimation__IDL_a1f1b82575fb40899ba846bb3afc21406}{pause} ()
+\begin{DoxyCompactList}\small\item\em Pause the hand pose estimation. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classhandPoseEstimation__IDL_aea26d5dfb9414ac732c8aee27d4b0bcc}{resume} ()
+\begin{DoxyCompactList}\small\item\em Resume the hand pose estimation. \end{DoxyCompactList}\item 
+virtual yarp\+::os\+::\+Bottle \hyperlink{classhandPoseEstimation__IDL_a195b385595237044aa81c8a60ec0c75c}{last\+Offsets} ()
+\begin{DoxyCompactList}\small\item\em Ask for the last estimated angular Offsets on the arm (7\+DoF) \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classhandPoseEstimation__IDL_aeae04edc596badd5c68814d7709c8820}{quit} ()
+\begin{DoxyCompactList}\small\item\em Quit the module. \end{DoxyCompactList}\item 
+virtual bool {\bfseries read} (yarp\+::os\+::\+Connection\+Reader \&connection) Y\+A\+R\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE\label{classhandPoseEstimation__IDL_a29990dd4c33d73655d206b0d8e342c83}
+
+\item 
+virtual std\+::vector$<$ std\+::string $>$ {\bfseries help} (const std\+::string \&function\+Name=\char`\"{}-\/-\/all\char`\"{})\label{classhandPoseEstimation__IDL_ade8e064ba4c36b3f27c0868c0a7875b8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classhandPoseEstimation__IDL}{hand\+Pose\+Estimation\+\_\+\+I\+DL} I\+DL Interface to \hyperlink{group__handPoseEstimation-module}{hand\+Pose\+Estimation-\/module} services. 
+
+This is a fake thrift service, just to show how to structure your repo and how to document your code. 
+
+Definition at line 20 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!last\+Offsets@{last\+Offsets}}
+\index{last\+Offsets@{last\+Offsets}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{last\+Offsets()}{lastOffsets()}}]{\setlength{\rightskip}{0pt plus 5cm}yarp\+::os\+::\+Bottle hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::last\+Offsets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_a195b385595237044aa81c8a60ec0c75c}
+
+
+Ask for the last estimated angular Offsets on the arm (7\+DoF) 
+
+\begin{DoxyReturn}{Returns}
+Bottle with last angular Offsets 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_a59ac2a028179a7fbdd6571ef889e3d3b}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 225 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+225                                                  \{
+226   yarp::os::Bottle \_return;
+227   handPoseEstimation\_IDL\_lastOffsets helper;
+228   helper.init();
+229   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+230     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"yarp::os::Bottle handPoseEstimation\_IDL::lastOffsets()"});
+231   \}
+232   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+233   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+234 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!pause@{pause}}
+\index{pause@{pause}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{pause()}{pause()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::pause (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_a1f1b82575fb40899ba846bb3afc21406}
+
+
+Pause the hand pose estimation. 
+
+The filter stop the generation of particles and waits for a resume command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_ab43685cf6812c7c4c0b1af334f31e94e}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 205 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+205                                    \{
+206   \textcolor{keywordtype}{bool} \_return = \textcolor{keyword}{false};
+207   handPoseEstimation\_IDL\_pause helper;
+208   helper.init();
+209   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+210     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"bool handPoseEstimation\_IDL::pause()"});
+211   \}
+212   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+213   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+214 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!quit@{quit}}
+\index{quit@{quit}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{quit()}{quit()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::quit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_aeae04edc596badd5c68814d7709c8820}
+
+
+Quit the module. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_a74ab9a34c397b41e805f5124fb8c2bda}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 235 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+235                                   \{
+236   \textcolor{keywordtype}{bool} \_return = \textcolor{keyword}{false};
+237   handPoseEstimation\_IDL\_quit helper;
+238   helper.init();
+239   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+240     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"bool handPoseEstimation\_IDL::quit()"});
+241   \}
+242   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+243   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+244 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!resume@{resume}}
+\index{resume@{resume}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{resume()}{resume()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::resume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_aea26d5dfb9414ac732c8aee27d4b0bcc}
+
+
+Resume the hand pose estimation. 
+
+The filter resumes the generation of particles after a pause command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_aebfd952abd71f3faf9270efb2a8c5241}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 215 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+215                                     \{
+216   \textcolor{keywordtype}{bool} \_return = \textcolor{keyword}{false};
+217   handPoseEstimation\_IDL\_resume helper;
+218   helper.init();
+219   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+220     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"bool handPoseEstimation\_IDL::resume()"});
+221   \}
+222   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+223   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+224 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!start@{start}}
+\index{start@{start}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{start()}{start()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_a0168a812d2209bba67212dc2969bc763}
+
+
+Start (re-\/start) the hand pose estimation. 
+
+The filter generates particles and update the particle distribution accordingly \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_aec7a8ef91db9cfde42966bdf90f50363}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 185 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+185                                    \{
+186   \textcolor{keywordtype}{bool} \_return = \textcolor{keyword}{false};
+187   handPoseEstimation\_IDL\_start helper;
+188   helper.init();
+189   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+190     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"bool handPoseEstimation\_IDL::start()"});
+191   \}
+192   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+193   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+194 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}!stop@{stop}}
+\index{stop@{stop}!hand\+Pose\+Estimation\+\_\+\+I\+DL@{hand\+Pose\+Estimation\+\_\+\+I\+DL}}
+\subsubsection[{\texorpdfstring{stop()}{stop()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+\_\+\+I\+D\+L\+::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimation__IDL_a9d3f8b39a34db325c89b2c7b44ded1f1}
+
+
+Stop the hand pose estimation. 
+
+The filter stop the generation of particles and waits for a start command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classhandPoseEstimationModule_aa742424fe8c42bf74a908ab8eff2b0ab}{hand\+Pose\+Estimation\+Module}.
+
+
+
+Definition at line 195 of file hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp.
+
+
+\begin{DoxyCode}
+195                                   \{
+196   \textcolor{keywordtype}{bool} \_return = \textcolor{keyword}{false};
+197   handPoseEstimation\_IDL\_stop helper;
+198   helper.init();
+199   \textcolor{keywordflow}{if} (!yarp().canWrite()) \{
+200     yError(\textcolor{stringliteral}{"Missing server method '%s'?"},\textcolor{stringliteral}{"bool handPoseEstimation\_IDL::stop()"});
+201   \}
+202   \textcolor{keywordtype}{bool} ok = yarp().write(helper,helper);
+203   \textcolor{keywordflow}{return} ok?helper.\_return:\_return;
+204 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/hand\+Pose\+Estimation/include/hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+h\item 
+/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/hand\+Pose\+Estimation/src/hand\+Pose\+Estimation\+\_\+\+I\+D\+L.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,110 @@
+Step-\/by-\/\+Step Installation Guide\hypertarget{installation_handpose_sec}{}\section{Hand\+Pose\+Estimation}\label{installation_handpose_sec}
+{\bfseries Check} its dependencies before installing this module\+:
+
+
+\begin{DoxyItemize}
+\item Y\+A\+RP
+\item Open\+CV (tested with v2.\+10 and v3.\+3)
+\end{DoxyItemize}
+
+{\bfseries Optional} 
+\begin{DoxyItemize}
+\item I\+C\+U\+Bcontrib \href{https://github.com/robotology/icub-contrib-common}{\tt link}
+\end{DoxyItemize}
+
+{\bfseries Then\+:} 
+
+Open a terminal.
+
+Go to the hand\+Pose\+Estimation module root folder\+:
+
+
+\begin{DoxyItemize}
+\item /\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/hand\+Pose\+Estimation
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}
+mkdir build && cd build 
+\end{DoxyCode}
+
+
+
+\begin{DoxyCode}
+ccmake .. 
+\end{DoxyCode}
+
+
+Press {\itshape c} (twice) and, if no error occurs, press {\itshape g} do generate.
+
+Compile the code\+: 
+\begin{DoxyCode}
+make 
+\end{DoxyCode}
+ and if you have the I\+C\+U\+Bcontrib repository installed do a 
+\begin{DoxyCode}
+make install 
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+The installation process is similar if you are installing this module in a Windows machine)
+\end{DoxyNote}
+\hypertarget{installation_likelihood_sec}{}\section{Likelihood Assessment}\label{installation_likelihood_sec}
+{\bfseries Check} its dependencies before installing this module\+:
+
+
+\begin{DoxyItemize}
+\item Windows Machine
+\item Open\+CV (tested with v2.\+10)
+\item C\+U\+DA Tool\+Kit (tested with v6.\+5)
+\item C\+Make-\/\+Gui
+\item Visual Studio (tested with V\+S10) or another C++/\+C\+U\+DA compiler
+\end{DoxyItemize}
+
+{\bfseries Then\+:} 
+
+Open the cmake-\/gui executable
+
+
+
+In the section {\itshape  where is the source code }, insert the path (absolute path)\+: 
+\begin{DoxyCode}
+/Online-Body-Schema-Adaptation/modules/likelihoodAssessment 
+\end{DoxyCode}
+ In the section {\itshape  where to build the binaries }, insert the path (absolute path)\+: 
+\begin{DoxyCode}
+/Online-Body-Schema-Adaptation/modules/likelihoodAssessment/build 
+\end{DoxyCode}
+ and press the configure button, choosing the {\itshape 32} {\itshape bit} {\itshape version} of your compiler
+
+The variable {\itshape  C\+U\+D\+A\+\_\+\+S\+D\+K\+\_\+\+R\+O\+O\+T\+\_\+\+D\+IR } will appear and should point to 
+\begin{DoxyCode}
+C:\(\backslash\)ProgramData\(\backslash\)NVIDIA Corporation\(\backslash\)CUDA Samples\(\backslash\)v6.5\(\backslash\)common 
+\end{DoxyCode}
+ or similar, according to the C\+U\+DA version installed.
+
+Press generate and open the C\+U\+D\+Acompare\+Edge2.\+sln file (which is inside the build folder)
+
+choose {\itshape Release} version, set Cudacompare\+Edge2 as the Startup project, and build the project.
+
+You should have now a {\itshape Cudacompare\+Edge2.\+dll} file inside the {\itshape Release} folder.\hypertarget{installation_internalmode_sec}{}\section{Robot\textquotesingle{}s Internal Model}\label{installation_internalmode_sec}
+Compile the Yarp Bindings for C\#\+:
+
+\href{http://www.yarp.it/yarp_swig.html#yarp_swig_windows}{\tt http\+://www.\+yarp.\+it/yarp\+\_\+swig.\+html\#yarp\+\_\+swig\+\_\+windows}
+
+You should have a {\itshape yarp.\+dll} file after installing the bindings.
+
+Copy the {\itshape Cudacompare\+Edge2.\+dll} file (generated during the compilation of the likelihood Assessment) and the {\itshape yarp.\+dll} to\+: 
+\begin{DoxyCode}
+modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon\_Data/Plugins/ 
+\end{DoxyCode}
+
+
+\begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt} ~\newline
+
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v3.\+0. 
+\end{DoxyCopyright}

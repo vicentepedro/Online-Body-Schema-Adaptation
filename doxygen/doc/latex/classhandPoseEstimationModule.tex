@@ -1,0 +1,792 @@
+\section{hand\+Pose\+Estimation\+Module Class Reference}
+\label{classhandPoseEstimationModule}\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+
+
+Class \hyperlink{classhandPoseEstimationModule}{hand\+Pose\+Estimation\+Module}.  
+
+
+
+
+{\ttfamily \#include $<$hand\+Pose\+Estimation\+Module.\+h$>$}
+
+Inheritance diagram for hand\+Pose\+Estimation\+Module\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classhandPoseEstimationModule}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool {\bfseries configure} (yarp\+::os\+::\+Resource\+Finder \&rf)\label{classhandPoseEstimationModule_af5197dc0855f11f1acc9c346d8db4983}
+
+\item 
+virtual bool {\bfseries interrupt\+Module} ()\label{classhandPoseEstimationModule_a09e731bf904a5b3d87e4c1be6a5faa20}
+
+\item 
+virtual bool {\bfseries close} ()\label{classhandPoseEstimationModule_a647af57556f324abb187fe89a2939914}
+
+\item 
+virtual bool {\bfseries update\+Module} ()\label{classhandPoseEstimationModule_ae15f1e537aeafdba4c15ae8e8a9aa59a}
+
+\item 
+virtual double {\bfseries get\+Period} ()\label{classhandPoseEstimationModule_a8f14212e01137285bd05b3f8a2d8b782}
+
+\item 
+bool {\bfseries attach} (yarp\+::os\+::\+Rpc\+Server \&source)\label{classhandPoseEstimationModule_a5f806eba28e4a2a7d36269ffb4a49f7c}
+
+\item 
+bool \hyperlink{classhandPoseEstimationModule_aec7a8ef91db9cfde42966bdf90f50363}{start} ()
+\begin{DoxyCompactList}\small\item\em Start (re-\/start) the hand pose estimation. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_aa742424fe8c42bf74a908ab8eff2b0ab}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop the hand pose estimation. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_ab43685cf6812c7c4c0b1af334f31e94e}{pause} ()
+\begin{DoxyCompactList}\small\item\em Pause the hand pose estimation. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_aebfd952abd71f3faf9270efb2a8c5241}{resume} ()
+\begin{DoxyCompactList}\small\item\em Resume the hand pose estimation. \end{DoxyCompactList}\item 
+yarp\+::os\+::\+Bottle \hyperlink{classhandPoseEstimationModule_a59ac2a028179a7fbdd6571ef889e3d3b}{last\+Offsets} ()
+\begin{DoxyCompactList}\small\item\em Ask for the last estimated angular Offsets on the arm (7\+DoF) \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_a74ab9a34c397b41e805f5124fb8c2bda}{quit} ()
+\begin{DoxyCompactList}\small\item\em Quit the module. \end{DoxyCompactList}\item 
+virtual bool {\bfseries read} (yarp\+::os\+::\+Connection\+Reader \&connection) Y\+A\+R\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE\label{classhandPoseEstimation__IDL_a29990dd4c33d73655d206b0d8e342c83}
+
+\item 
+virtual std\+::vector$<$ std\+::string $>$ {\bfseries help} (const std\+::string \&function\+Name=\char`\"{}-\/-\/all\char`\"{})\label{classhandPoseEstimation__IDL_ade8e064ba4c36b3f27c0868c0a7875b8}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+cv\+::\+Mat \hyperlink{classhandPoseEstimationModule_a50367df17ce84fad3013c9d1ad8046ef}{process\+Images} (cv\+::\+Mat input\+Image)
+\begin{DoxyCompactList}\small\item\em The function applies a canny edge detector and a distance transform. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_aafbe3332af03ca7e53a8c10f88aa053b}{initialize\+S\+M\+C\+Variables} ()
+\begin{DoxyCompactList}\small\item\em Initialize the variables structs needed for the S\+MC to run. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_ad4081c972d64010b87be4ba10a8b967d}{init\+S\+MC} ()
+\begin{DoxyCompactList}\small\item\em Initialize the variables values for the S\+MC. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_a05f882cb3c4c6db81ec2e206cd7eb695}{run\+S\+M\+C\+Iteration} ()
+\begin{DoxyCompactList}\small\item\em Run one iteration of the Sequential Monte Carlo Parameters estimation. \end{DoxyCompactList}\item 
+void \hyperlink{classhandPoseEstimationModule_ab347a264eb373426ecc9e96cf05bafb9}{merge\+And\+Flip\+Images} ()
+\begin{DoxyCompactList}\small\item\em merge the left and right images. \end{DoxyCompactList}\item 
+void \hyperlink{classhandPoseEstimationModule_ae3b532f8f459b758a8897a4f05dfe704}{kernel\+Density\+Estimation} ()\label{classhandPoseEstimationModule_ae3b532f8f459b758a8897a4f05dfe704}
+
+\begin{DoxyCompactList}\small\item\em Perform the Kernel Density estimation with a multivariate gaussian kernel. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_a4a5ca4a283875fe6af208a0a4e93fd79}{read\+Arm\+Joints} ()
+\begin{DoxyCompactList}\small\item\em Read the arm joints. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_a047f05204cd073243f64ac149997d7db}{read\+Head\+Joints} ()
+\begin{DoxyCompactList}\small\item\em Read the head joints. \end{DoxyCompactList}\item 
+bool \hyperlink{classhandPoseEstimationModule_a9da864a1b3853a9f631b6d3a5caad77d}{systematic\+\_\+resampling} (Cv\+Mat $\ast$old\+Particles\+State, Cv\+Mat $\ast$old\+Particles\+Weights, Cv\+Mat $\ast$new\+Particles\+State, Cv\+Mat $\ast$cum\+Weight, float sum2)
+\begin{DoxyCompactList}\small\item\em perform the systematic resampling step of the S\+MC algorithm \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class \hyperlink{classhandPoseEstimationModule}{hand\+Pose\+Estimation\+Module}. 
+
+
+
+Definition at line 53 of file hand\+Pose\+Estimation\+Module.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!initialize\+S\+M\+C\+Variables@{initialize\+S\+M\+C\+Variables}}
+\index{initialize\+S\+M\+C\+Variables@{initialize\+S\+M\+C\+Variables}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{initialize\+S\+M\+C\+Variables()}{initializeSMCVariables()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::initialize\+S\+M\+C\+Variables (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_aafbe3332af03ca7e53a8c10f88aa053b}
+
+
+Initialize the variables structs needed for the S\+MC to run. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 92 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+93 \{
+94     nParticles=200; \textcolor{comment}{// HardCoded since the Internal Model should be recompiled to support a different
+       amount of particles}
+95 
+96     \textcolor{comment}{//allocate memory for the particles;}
+97     particles=cvCreateMat(8,nParticles,CV\_32FC1); \textcolor{comment}{// 0-6 Betas 7- likelihood}
+98     \textcolor{comment}{//fill the memory with zeros}
+99     cvSetZero(particles);
+100 
+101     \textcolor{comment}{//define ways of accessing the particles:}
+102     \textcolor{comment}{// Beta1}
+103     particles1 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+104     cvInitMatHeader( particles1, 1, nParticles, CV\_32FC1, particles->data.ptr, particles->step );
+105     \textcolor{comment}{// Beta2}
+106     particles2 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+107     cvInitMatHeader( particles2, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*1, 
+      particles->step );
+108     \textcolor{comment}{// Beta3}
+109     particles3 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+110     cvInitMatHeader( particles3, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*2, 
+      particles->step );
+111     \textcolor{comment}{// Beta4}
+112     particles4 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+113     cvInitMatHeader( particles4, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*3, 
+      particles->step );
+114     \textcolor{comment}{// Beta5}
+115     particles5 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+116     cvInitMatHeader( particles5, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*4, 
+      particles->step );
+117     \textcolor{comment}{// Beta6}
+118     particles6 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+119     cvInitMatHeader( particles6, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*5, 
+      particles->step );
+120     \textcolor{comment}{// Beta7}
+121     particles7 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+122     cvInitMatHeader( particles7, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*6, 
+      particles->step );
+123     \textcolor{comment}{// likelihood}
+124     particles8 = cvCreateMatHeader( 1,nParticles, CV\_32FC1);
+125     cvInitMatHeader( particles8, 1, nParticles, CV\_32FC1, particles->data.ptr + particles->step*7, 
+      particles->step );
+126 
+127     \textcolor{comment}{//theta1-theta7}
+128     particles1to7 = cvCreateMatHeader( 7,nParticles, CV\_32FC1);
+129     cvInitMatHeader( particles1to7, 7, nParticles, CV\_32FC1, particles->data.ptr, particles->step );
+130 
+131 
+132     newParticles=cvCreateMat(8,nParticles,CV\_32FC1);
+133     newParticles1to7 = cvCreateMatHeader( 7,nParticles, CV\_32FC1);
+134     cvInitMatHeader( newParticles1to7, 7, nParticles, CV\_32FC1, newParticles->data.ptr, newParticles->step 
+      );
+135     \textcolor{comment}{// Resampling stuff}
+136     cumWeight =cvCreateMat(1,nParticles+1,CV\_32FC1);
+137     noise=cvCreateMat(7,nParticles,CV\_32FC1);
+138     cvSetZero(noise);   
+139     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+140 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!init\+S\+MC@{init\+S\+MC}}
+\index{init\+S\+MC@{init\+S\+MC}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{init\+S\+M\+C()}{initSMC()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::init\+S\+MC (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_ad4081c972d64010b87be4ba10a8b967d}
+
+
+Initialize the variables values for the S\+MC. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 142 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+143 \{
+144     \textcolor{comment}{// Generate random particles}
+145 
+146     srand((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})time(0)); \textcolor{comment}{//make sure random numbers are really random.}
+147     rngState = cvRNG(rand());
+148 
+149     cvRandArr( &rngState, particles1, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+150     \textcolor{comment}{//initialize Theta2}
+151     cvRandArr( &rngState, particles2, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+152     \textcolor{comment}{//initialize Theta3}
+153     cvRandArr( &rngState, particles3, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+154     \textcolor{comment}{//initialize Theta4}
+155     cvRandArr( &rngState, particles4, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+156     \textcolor{comment}{//initialize Theta5}
+157     cvRandArr( &rngState, particles5, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+158     \textcolor{comment}{//initialize Theta6}
+159     cvRandArr( &rngState, particles6, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+160     \textcolor{comment}{//initialize Theta7}
+161     cvRandArr( &rngState, particles7, CV\_RAND\_NORMAL, cvScalar(initialMean), cvScalar(initialStdDev));
+162 
+163     \textcolor{comment}{// Artificial Noise Initialization}
+164     artifNoiseStdDev = initialArtificialNoiseStdDev;
+165     \textcolor{comment}{// Setting first particle as Zero offset    }
+166     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} joint=0;joint<8;joint++) 
+167     \{
+168         cvmSet(particles,joint,0,0.0);
+169     \}
+170     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+171 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!last\+Offsets@{last\+Offsets}}
+\index{last\+Offsets@{last\+Offsets}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{last\+Offsets()}{lastOffsets()}}]{\setlength{\rightskip}{0pt plus 5cm}yarp\+::os\+::\+Bottle hand\+Pose\+Estimation\+Module\+::last\+Offsets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_a59ac2a028179a7fbdd6571ef889e3d3b}
+
+
+Ask for the last estimated angular Offsets on the arm (7\+DoF) 
+
+\begin{DoxyReturn}{Returns}
+Bottle with last angular Offsets 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_a195b385595237044aa81c8a60ec0c75c}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 675 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+676 \{
+677     yInfo(\textcolor{stringliteral}{"lastOffsets command received"});
+678     Bottle reply;
+679     reply = lastBestOffset;
+680     \textcolor{keywordflow}{return} reply;
+681 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!merge\+And\+Flip\+Images@{merge\+And\+Flip\+Images}}
+\index{merge\+And\+Flip\+Images@{merge\+And\+Flip\+Images}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{merge\+And\+Flip\+Images()}{mergeAndFlipImages()}}]{\setlength{\rightskip}{0pt plus 5cm}void hand\+Pose\+Estimation\+Module\+::merge\+And\+Flip\+Images (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_ab347a264eb373426ecc9e96cf05bafb9}
+
+
+merge the left and right images. 
+
+i.\+e., concatenate horizontally. 
+
+Definition at line 402 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+403 \{
+404     cv::hconcat(imageProcL, imageProcR,concatenatedImage);
+405     cv::flip(concatenatedImage,concatenatedImage,0);
+406     cvtColor(concatenatedImage,concatenatedImage,CV\_GRAY2BGR);
+407 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!pause@{pause}}
+\index{pause@{pause}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{pause()}{pause()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::pause (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_ab43685cf6812c7c4c0b1af334f31e94e}
+
+
+Pause the hand pose estimation. 
+
+The filter stop the generation of particles and waits for a resume command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_a1f1b82575fb40899ba846bb3afc21406}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 661 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+662 \{
+663     paused = \textcolor{keyword}{true};
+664     yInfo(\textcolor{stringliteral}{"pause command received"});
+665     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+666 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!process\+Images@{process\+Images}}
+\index{process\+Images@{process\+Images}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{process\+Images(cv\+::\+Mat input\+Image)}{processImages(cv::Mat inputImage)}}]{\setlength{\rightskip}{0pt plus 5cm}Mat hand\+Pose\+Estimation\+Module\+::process\+Images (
+\begin{DoxyParamCaption}
+\item[{cv\+::\+Mat}]{input\+Image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_a50367df17ce84fad3013c9d1ad8046ef}
+
+
+The function applies a canny edge detector and a distance transform. 
+
+\begin{DoxyReturn}{Returns}
+the processed image 
+\end{DoxyReturn}
+
+
+Definition at line 552 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+553 \{
+554     Mat edges,dtImage;
+555     Mat dtImage2,dtImage2\_8;
+556     cvtColor(inputImage,edges,CV\_RGB2GRAY);
+557 
+558     \textcolor{comment}{// Image}
+559     blur( edges, edges, Size(3,3) );
+560     Canny(edges,edges,65,3*65,3);
+561     threshold(edges,edges,100,255,THRESH\_BINARY\_INV);
+562     distanceTransform(edges,dtImage,CV\_DIST\_L2,CV\_DIST\_MASK\_5);
+563     cvtColor(dtImage,dtImage2,CV\_GRAY2BGR);
+564     dtImage.convertTo(dtImage2\_8,CV\_8UC3);
+565     \textcolor{keywordflow}{return} dtImage2\_8;
+566 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!quit@{quit}}
+\index{quit@{quit}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{quit()}{quit()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::quit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_a74ab9a34c397b41e805f5124fb8c2bda}
+
+
+Quit the module. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_aeae04edc596badd5c68814d7709c8820}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 683 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+684 \{
+685     yInfo(\textcolor{stringliteral}{"quit command received"});
+686     closing = \textcolor{keyword}{true};
+687     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+688 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!read\+Arm\+Joints@{read\+Arm\+Joints}}
+\index{read\+Arm\+Joints@{read\+Arm\+Joints}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{read\+Arm\+Joints()}{readArmJoints()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::read\+Arm\+Joints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_a4a5ca4a283875fe6af208a0a4e93fd79}
+
+
+Read the arm joints. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 568 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+569 \{
+570     \textcolor{comment}{// read Arm joint angles}
+571     Bottle *receive = armPort.read();
+572 
+573     \textcolor{keywordtype}{string} s1 = receive->toString();
+574     \textcolor{keywordtype}{char} *str = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[s1.size()+1];
+575     strcpy(str, s1.c\_str());
+576     \textcolor{keywordtype}{char} * pch;
+577     pch = strtok ( (\textcolor{keywordtype}{char}*) str,\textcolor{stringliteral}{" "});
+578     \textcolor{keywordtype}{int} i=0;
+579     \textcolor{keywordflow}{while} (pch != NULL) 
+580     \{
+581         encodersArm[i]=atof(pch);
+582         pch = strtok (NULL, \textcolor{stringliteral}{" "});
+583         i++;
+584     \}
+585 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!read\+Head\+Joints@{read\+Head\+Joints}}
+\index{read\+Head\+Joints@{read\+Head\+Joints}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{read\+Head\+Joints()}{readHeadJoints()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::read\+Head\+Joints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_a047f05204cd073243f64ac149997d7db}
+
+
+Read the head joints. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 587 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+588 \{
+589     \textcolor{comment}{//Read Head Joint Angles    }
+590     Bottle *receive = headPort.read();
+591     \textcolor{keywordtype}{string} s2 = receive->toString();
+592     \textcolor{keywordtype}{char} *str = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[s2.size()+1];
+593     strcpy(str, s2.c\_str());
+594     \textcolor{keywordtype}{char} * pch;
+595     pch = strtok ( (\textcolor{keywordtype}{char}*) str,\textcolor{stringliteral}{" "});
+596     \textcolor{keywordtype}{int} i=0;
+597     \textcolor{keywordflow}{while} (pch != NULL) 
+598     \{
+599         encodersHead[i]=atof(pch);
+600         pch = strtok (NULL, \textcolor{stringliteral}{" "});
+601         i++;
+602     \}
+603 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!resume@{resume}}
+\index{resume@{resume}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{resume()}{resume()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::resume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_aebfd952abd71f3faf9270efb2a8c5241}
+
+
+Resume the hand pose estimation. 
+
+The filter resumes the generation of particles after a pause command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_aea26d5dfb9414ac732c8aee27d4b0bcc}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 668 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+669 \{
+670     paused = \textcolor{keyword}{false};
+671     yInfo(\textcolor{stringliteral}{"resume command received"});
+672     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+673 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!run\+S\+M\+C\+Iteration@{run\+S\+M\+C\+Iteration}}
+\index{run\+S\+M\+C\+Iteration@{run\+S\+M\+C\+Iteration}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{run\+S\+M\+C\+Iteration()}{runSMCIteration()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::run\+S\+M\+C\+Iteration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_a05f882cb3c4c6db81ec2e206cd7eb695}
+
+
+Run one iteration of the Sequential Monte Carlo Parameters estimation. 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 173 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+174 \{
+175     \textcolor{comment}{// tmp variables}
+176     \textcolor{keywordtype}{double} maxLikelihood=0.0;
+177     \textcolor{keywordtype}{double} sumLikelihood=0.0;
+178     \textcolor{keywordtype}{double} likelihood=0.0;
+179 
+180     \textcolor{comment}{// prepare containers to send data through YARP}
+181     ImageOf<PixelBgr> &yarpReturnImage = LRimageOutputPort.prepare();
+182     Bottle &outputParticles = particlesOutPort.prepare();
+183     Bottle &outputHead= headOutPort.prepare();
+184     \textcolor{comment}{// prepare concatenated Image}
+185     concatenatedImage.convertTo(concatenatedImage,CV\_8UC3);
+186     yarpReturnImage.resize(concatenatedImage.cols,concatenatedImage.rows);
+187     concatenatedImage.copyTo( cvarrToMat( static\_cast<IplImage*> ( yarpReturnImage.getIplImage() ) ) );
+188     \textcolor{comment}{// Fill Bottle with offsets+encoders to generate}
+189     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} index=0;index < nParticles;index++) 
+190     \{
+191         \textcolor{comment}{// Arm + offsets}
+192         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} joint=0;joint<7;joint++) 
+193         \{
+194             outputParticles.addDouble(encodersArm[joint]+cvmGet(particles,joint,index));
+195             \textcolor{keywordflow}{if}(index==0)
+196             \{
+197                 yInfo() << cvmGet(particles,joint,index);
+198             \}
+199         \}
+200         \textcolor{comment}{// Fingers}
+201         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} joint=7;joint<16;joint++) 
+202         \{
+203             outputParticles.addDouble(encodersArm[joint]);
+204         \}
+205     \}
+206     outputParticles.addInt(nParticles); \textcolor{comment}{// n\_particles}
+207 
+208     \textcolor{comment}{// Fill Bottle with head encoders}
+209     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} k=0;k<6;k++)
+210     \{
+211         outputHead.addDouble(encodersHead[k]);
+212     \}
+213 
+214     \textcolor{comment}{//Send data to InternalModel}
+215     particlesOutPort.write();
+216     headOutPort.write();  
+217     LRimageOutputPort.write();
+218 
+219     \textcolor{comment}{// Waitint for results}
+220     yInfo(\textcolor{stringliteral}{"Waiting for Hypotheses generation and evaluation"});
+221     Bottle *receivedLikelihood = likelihoodPort.read();
+222     yInfo(\textcolor{stringliteral}{" DONE"});
+223     
+224     \textcolor{comment}{// Save the likelihood of each particle}
+225     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} index=0;index<nParticles;index++) 
+226     \{
+227         likelihood = receivedLikelihood->pop().asDouble();
+228         cvmSet(particles,7,index,likelihood);
+229         sumLikelihood+=likelihood;
+230         \textcolor{keywordflow}{if}(likelihood>maxLikelihood) 
+231         \{
+232             maxLikelihood=likelihood;
+233         \}
+234     \}
+235     cvmSet(particles,7,0,0.0);
+236     kernelDensityEstimation();
+237 
+238 
+239     yInfo(\textcolor{stringliteral}{"Best likelihood: %f"}, (\textcolor{keywordtype}{float}) cvmGet(particles,7,maxWeightIndex));
+240 
+241     \textcolor{keywordflow}{if}(iteration>minimumIteration) \textcolor{comment}{// START sending offsets}
+242     \{
+243         \textcolor{comment}{// Send Best Particle}
+244         Bottle &bestOffset = offsetsPort.prepare();
+245         bestOffset.clear();
+246         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<7;i++) 
+247         \{
+248             bestOffset.addDouble(cvmGet(particles,i,maxWeightIndex));
+249         \}
+250         lastBestOffset.clear();
+251         lastBestOffset = bestOffset;
+252         bestOffset.addDouble(iteration);
+253         offsetsPort.write();
+254     \}
+255     \textcolor{comment}{// Resampling or not Resampling. That's the Question}
+256 
+257     \textcolor{keywordflow}{if}(maxLikelihood>minimumLikelihood) 
+258     \{
+259         systematic_resampling(particles1to7,particles8,newParticles,cumWeight, sumLikelihood);
+260         artifNoiseStdDev=artifNoiseStdDev*decreasedMultiplier;
+261     \}
+262     \textcolor{keywordflow}{else}  \textcolor{comment}{//I can't apply a resampling with all weights equal to 0! }
+263     \{
+264         cvCopy(particles,newParticles);
+265         artifNoiseStdDev=artifNoiseStdDev*increasedMultiplier;
+266     \}
+267     \textcolor{keywordflow}{if}(artifNoiseStdDev > upperBoundNoise) 
+268     \{
+269        artifNoiseStdDev = upperBoundNoise;
+270     \}
+271     \textcolor{comment}{// Apply artificial Dynamics}
+272 
+273     CvMat* A = cvCreateMat(8,8,CV\_32FC1);
+274     cvSetIdentity(A); \textcolor{comment}{//}
+275     cvMatMul(A,newParticles,particles);
+276 
+277     \textcolor{keywordtype}{float} mean = 0;
+278     CvMat* noiseSingle;
+279     noiseSingle = cvCreateMat(1,nParticles,CV\_32FC1);
+280     cvSetZero(noiseSingle);
+281     \textcolor{keywordflow}{if}(artifNoiseStdDev < lowerBoundNoise)  \textcolor{comment}{// lowerbound of artificial noise}
+282     \{
+283         artifNoiseStdDev = lowerBoundNoise;
+284     \}
+285     cvRandArr( &rngState, noise, CV\_RAND\_NORMAL, cvScalar(mean), cvScalar(artifNoiseStdDev));
+286     cvAdd(particles1to7,noise,particles1to7);
+287     yInfo() << \textcolor{stringliteral}{"ArtNoise: "} << artifNoiseStdDev;
+288     \textcolor{comment}{// Setting first particle as Zero offset}
+289     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} joint=0;joint<8;joint++) 
+290     \{
+291         cvmSet(particles,joint,0,0.0);
+292     \}
+293     
+294     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+295 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!start@{start}}
+\index{start@{start}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{start()}{start()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_aec7a8ef91db9cfde42966bdf90f50363}
+
+
+Start (re-\/start) the hand pose estimation. 
+
+The filter generates particles and update the particle distribution accordingly \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_a0168a812d2209bba67212dc2969bc763}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 644 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+645 \{
+646     iteration=0;
+647     initSMC(); \textcolor{comment}{// Generated new particles}
+648     stopped = \textcolor{keyword}{false};
+649     yInfo(\textcolor{stringliteral}{"start command received"});
+650     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+651 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!stop@{stop}}
+\index{stop@{stop}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{stop()}{stop()}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classhandPoseEstimationModule_aa742424fe8c42bf74a908ab8eff2b0ab}
+
+
+Stop the hand pose estimation. 
+
+The filter stop the generation of particles and waits for a start command \begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classhandPoseEstimation__IDL_a9d3f8b39a34db325c89b2c7b44ded1f1}{hand\+Pose\+Estimation\+\_\+\+I\+DL}.
+
+
+
+Definition at line 653 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+654 \{
+655     stopped = \textcolor{keyword}{true};
+656     yInfo(\textcolor{stringliteral}{"stop command received"});
+657     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+658 
+659 \}
+\end{DoxyCode}
+\index{hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}!systematic\+\_\+resampling@{systematic\+\_\+resampling}}
+\index{systematic\+\_\+resampling@{systematic\+\_\+resampling}!hand\+Pose\+Estimation\+Module@{hand\+Pose\+Estimation\+Module}}
+\subsubsection[{\texorpdfstring{systematic\+\_\+resampling(\+Cv\+Mat $\ast$old\+Particles\+State, Cv\+Mat $\ast$old\+Particles\+Weights, Cv\+Mat $\ast$new\+Particles\+State, Cv\+Mat $\ast$cum\+Weight, float sum2)}{systematic_resampling(CvMat *oldParticlesState, CvMat *oldParticlesWeights, CvMat *newParticlesState, CvMat *cumWeight, float sum2)}}]{\setlength{\rightskip}{0pt plus 5cm}bool hand\+Pose\+Estimation\+Module\+::systematic\+\_\+resampling (
+\begin{DoxyParamCaption}
+\item[{Cv\+Mat $\ast$}]{old\+Particles\+State, }
+\item[{Cv\+Mat $\ast$}]{old\+Particles\+Weights, }
+\item[{Cv\+Mat $\ast$}]{new\+Particles\+State, }
+\item[{Cv\+Mat $\ast$}]{cum\+Weight, }
+\item[{float}]{sum2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{classhandPoseEstimationModule_a9da864a1b3853a9f631b6d3a5caad77d}
+
+
+perform the systematic resampling step of the S\+MC algorithm 
+
+\begin{DoxyReturn}{Returns}
+true/false on success/failure 
+\end{DoxyReturn}
+
+
+Definition at line 329 of file hand\+Pose\+Estimation\+Module.\+cpp.
+
+
+\begin{DoxyCode}
+330 \{
+331     \textcolor{keywordtype}{double} u; \textcolor{comment}{//random number [0,1)}
+332     \textcolor{keywordtype}{double} sum;
+333     \textcolor{keywordtype}{int} c1;
+334     \textcolor{keywordtype}{int} rIndex;  \textcolor{comment}{//index of the randomized array}
+335     \textcolor{keywordtype}{int} cIndex;  \textcolor{comment}{//index of the cumulative weight array. cIndex -1 indicates which particle we think of
+       resampling.}
+336     \textcolor{keywordtype}{int} npIndex; \textcolor{comment}{//%new particle index, tells me how many particles have been created so far.}
+337 
+338     \textcolor{comment}{//%N is the number of particles.}
+339     \textcolor{comment}{//[lines, N] = size(oldParticlesWeight);}
+340     \textcolor{comment}{//in CPP, \_nParticles is the number of particles.}
+341 
+342 
+343     \textcolor{comment}{//%NORMALIZE THE WEIGHTS, so that sum(oldParticles)=1.}
+344     \textcolor{comment}{//oldParticlesWeight = oldParticlesWeight / sum(oldParticlesWeight);}
+345     sum=0;
+346 
+347     \textcolor{keywordflow}{for}(c1=0;c1<nParticles;c1++) 
+348     \{
+349         ((\textcolor{keywordtype}{float}*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1] = (((\textcolor{keywordtype}{float}*)(
+      oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1])/(\textcolor{keywordtype}{float})sum2;
+350     \}
+351     \textcolor{keywordflow}{for}(c1=0;c1<nParticles;c1++) 
+352     \{
+353         sum+=((\textcolor{keywordtype}{float}*)(oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1];
+354     \}
+355 
+356     \textcolor{comment}{//%GENERATE N RANDOM VALUES}
+357     \textcolor{comment}{//u = rand(1)/N; %random value [0,1/N)}
+358     u=1/(double)nParticles*((\textcolor{keywordtype}{double})rand()/(double)RAND\_MAX);
+359 
+360     \textcolor{comment}{//%the randomized values are going to be u, u+1/N, u+2/N, etc.}
+361     \textcolor{comment}{//%instead of accessing this vector, the elements are computed on the fly:}
+362     \textcolor{comment}{//%randomVector(a)= (a-1)/N+u.}
+363 
+364     ((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[0]=0.0;
+365     \textcolor{keywordflow}{for}(c1=0;c1<nParticles;c1++) 
+366     \{
+367         ((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[c1+1]=((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[c1]+((\textcolor{keywordtype}{float}*)(
+      oldParticlesWeights->data.ptr + oldParticlesWeights->step*0))[c1];
+368     \}
+369 
+370     \textcolor{keywordflow}{if}(((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[nParticles]!=1) 
+371     \{
+372         ((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[nParticles]=1;
+373     \}
+374 
+375     \textcolor{comment}{//%PERFORM THE ACTUAL RESAMPLING}
+376     rIndex=0; \textcolor{comment}{//index of the randomized array}
+377     cIndex=1; \textcolor{comment}{//index of the cumulative weight array. cIndex -1 indicates which particle we think of
+       resampling.}
+378     npIndex=0; \textcolor{comment}{//new particle index, tells me how many particles have been created so far.}
+379 
+380     \textcolor{keywordflow}{while}(npIndex < nParticles) 
+381     \{
+382         \textcolor{keywordflow}{if}(((\textcolor{keywordtype}{float}*)(cumWeight->data.ptr))[cIndex]>=(double)rIndex/(\textcolor{keywordtype}{double})nParticles+u) \{
+383             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*0))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*0))[cIndex-1];
+384             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*1))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*1))[cIndex-1];
+385             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*2))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*2))[cIndex-1];
+386             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*3))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*3))[cIndex-1];
+387             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*4))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*4))[cIndex-1];
+388             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*5))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*5))[cIndex-1];
+389             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*6))[npIndex]=((\textcolor{keywordtype}{float}*)(
+      oldParticlesState->data.ptr + oldParticlesState->step*6))[cIndex-1];
+390             ((\textcolor{keywordtype}{float}*)(newParticlesState->data.ptr + newParticlesState->step*7))[npIndex]=0; \textcolor{comment}{//initializing
+       weight}
+391             rIndex=rIndex+1;
+392             npIndex=npIndex+1;
+393         \}
+394         \textcolor{keywordflow}{else} 
+395         \{
+396             cIndex=cIndex+1;
+397         \}
+398     \}
+399     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+400 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/hand\+Pose\+Estimation/include/\hyperlink{handPoseEstimationModule_8h}{hand\+Pose\+Estimation\+Module.\+h}\item 
+/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/hand\+Pose\+Estimation/src/\hyperlink{handPoseEstimationModule_8cpp}{hand\+Pose\+Estimation\+Module.\+cpp}\end{DoxyCompactItemize}

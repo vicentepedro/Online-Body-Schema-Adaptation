@@ -1,0 +1,55 @@
+\section{hand\+Pose\+Estimation-\/module}
+\label{group__handPoseEstimation-module}\index{hand\+Pose\+Estimation-\/module@{hand\+Pose\+Estimation-\/module}}
+
+
+Sequential Monte Carlo parameters estimation for the i\+Cub Humanoid Robot Version\+: v2.\+0.  
+
+
+Sequential Monte Carlo parameters estimation for the i\+Cub Humanoid Robot Version\+: v2.\+0. 
+
+\begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt} ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+License terms, for example\+: released under the terms of the G\+NU G\+PL v3.\+0 . 
+\end{DoxyCopyright}
+\hypertarget{group__handPoseEstimation-module_intro_sec}{}\subsection{Description}\label{group__handPoseEstimation-module_intro_sec}
+The hand pose estimation module belongs to the online body schema adaptation architecture. This module generates several samples (particles) to compared with the real images received from the robot. The new particles are generated according to the likelihood received from the internal model after rendering hallucinated images for the right and left images according to the proprioception and estimated angular offsets.\hypertarget{group__handPoseEstimation-module_parameters_sec}{}\subsection{Parameters}\label{group__handPoseEstimation-module_parameters_sec}
+
+\begin{DoxyItemize}
+\item --name\+: Name of the module (default=\textquotesingle{}hpe\textquotesingle{})
+\item --arm\+: Arm which the module should connect to. (default=\textquotesingle{}right\textquotesingle{})
+\item --initial\+Mean\+: Mean for the initial distribution of the particles \mbox{[}in degrees\mbox{]}. (default=0.\+0)
+\item --initial\+Std\+Dev\+: Standard Deviation of the initial distribution of the particles \mbox{[}in degrees\mbox{]}. (default=3.\+5)
+\item --artificial\+Noise\+Std\+Dev\+: Initial (standard deviation of) Artificial Noise to spread the particles after each iteration \mbox{[}in degrees\mbox{]}. (default=3.\+0)
+\item --lower\+Bound\+: Artificial Noise lower bound (Std\+Dev). Should be greater than Zero to prevent the particles to collapse in one simples value \mbox{[}in degrees\mbox{]}. (default=0.\+04)
+\item --upper\+Bound\+: Artificial Noise upper bound (Std\+Dev). The artificial noise should have a upper bound to prevent the particles to diverge after each resampling stage (default=3.\+5)
+\item --minimum\+Likelihood\+: Minimum\+Likelihood \mbox{[}0,1\mbox{]} in order to resample the particles (default=0.\+55)
+\item --increase\+Multiplier\+: increase the artificial noise of a certain value (current\+Value$\ast$increase\+Multiplier) if the maximum likihood is lower than the minimum\+Likelihood (default=1.\+15)
+\item --decrease\+Multiplier\+: decrease the artificial noise of a certain value (current\+Value$\ast$decrease\+Multiplier) if the maximum likihood is greater than the minimum\+Likelihood (default=0.\+85)
+\item --K\+D\+E\+Std\+Dev\+: Standard deviation of each kernel in the Kernel Density Estimation algorithm \mbox{[}in degrees\mbox{]}. (default=1.\+0)
+\item --min\+Iteration\+: number of iterations before output estimated Offsets (default=35) 
+\end{DoxyItemize}\hypertarget{group__handPoseEstimation-module_inputports_sec}{}\subsection{Input Ports}\label{group__handPoseEstimation-module_inputports_sec}
+
+\begin{DoxyItemize}
+\item /hpe/right\+Cam\+:i \mbox{[}image\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port should receive the right image
+\item /hpe/left\+Cam\+:i \mbox{[}image\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port should receive the left image
+\item /hpe/right\+Arm\+:i \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port should receive the encoders of the right (D\+E\+F\+A\+U\+LT) arm.
+\item /hpe/head\+:i \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port should receive the encoders of the head.
+\item /hpe/likelihood\+:i \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port will receive the likelihood Bottle containing the likelihood for each particles generated in the internal model.
+\item /hpe/finger\+Position\+:i \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port will receive a Bottle containing the fingertips position on the left image for each particles generated in the internal model.
+\end{DoxyItemize}\hypertarget{group__handPoseEstimation-module_outputports_sec}{}\subsection{Output Ports}\label{group__handPoseEstimation-module_outputports_sec}
+
+\begin{DoxyItemize}
+\item /hpe/\+L\+Rimage\+:o \mbox{[}image\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port sends the concatenation of the pre-\/processed left and right image to the internal model.
+\item /hpe/head\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port sends the encoders of the head to the internal model.
+\item /hpe/particles\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port sends the encoders of the arm + the estimated offsets to be generated by the internal model
+\item /hpe/best\+Offsets\+:o \mbox{[}Bottle\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port outputs the best set of Offsets after each iteration of the Sequential Monte Carlo parameter estimation algorithm
+\item /hpe/image\+Corrected\+:o \mbox{[}image\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port sends the left camera image with the fingertips positions superimposed according with the best estimated set of offsets.
+\item /hpe/image\+Canonical\+:o \mbox{[}image\mbox{]} \mbox{[}default carrier\+:udp\mbox{]}\+: This port sends the left camera image with the fingertips positions superimposed according with the canonical model (i.\+e. without angular offsets in the arm)
+\end{DoxyItemize}\hypertarget{group__handPoseEstimation-module_services_sec}{}\subsection{Services}\label{group__handPoseEstimation-module_services_sec}
+
+\begin{DoxyItemize}
+\item /hpe/rpc\+:i \mbox{[}rpc-\/server\mbox{]}\+: service port . This service is described in \hyperlink{classhandPoseEstimation__IDL}{hand\+Pose\+Estimation\+\_\+\+I\+DL} (hand\+Pose\+Estimation.\+thrift) 
+\end{DoxyItemize}

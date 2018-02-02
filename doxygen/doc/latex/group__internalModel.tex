@@ -1,0 +1,22 @@
+\section{internal\+Model}
+\label{group__internalModel}\index{internal\+Model@{internal\+Model}}
+
+
+Internal model generator based on Unity Game Engine.  
+
+
+Internal model generator based on Unity Game Engine. 
+
+Version\+: v2.\+0\hypertarget{group__internalModel_Description}{}\subsection{Description}\label{group__internalModel_Description}
+The Robot\textquotesingle{}s internal model generator receives head and arm encoders along with the real pre-\/processed perception and generates the appearance of the hand and arm on the left and right cameras calling the likelihood D\+LL function to compute the similarity between the each hypothesis (200 samples)\hypertarget{group__internalModel_Dependencies}{}\subsection{Dependencies}\label{group__internalModel_Dependencies}
+Open\+CV C\+U\+DA Tool\+Kit Y\+A\+RP C\# bindings\hypertarget{group__internalModel_Input}{}\subsection{Ports}\label{group__internalModel_Input}
+/internalmodel/right\+Arm\+:i Receives the arm encoders /internalmodel/head\+:i Receives the head encoders /internalmodel/cam\+:i Receives both left and right image (side-\/by-\/side)\hypertarget{group__internalModel_Output}{}\subsection{Ports}\label{group__internalModel_Output}
+/internalmodel/likelihood\+:o Sends the likelihood vector /internalmodel/fingertips\+:o Sends the projection of the fingertips (u,v pixel) on the left camera image
+
+\begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt} ~\newline
+
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+License terms, for example\+: released under the terms of the G\+NU G\+PL v3.\+0 . 
+\end{DoxyCopyright}

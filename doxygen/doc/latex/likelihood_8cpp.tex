@@ -1,0 +1,209 @@
+\section{/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/likelihood\+Assessment/src/likelihood.cpp File Reference}
+\label{likelihood_8cpp}\index{/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/likelihood\+Assessment/src/likelihood.\+cpp@{/home/pvicente/software/robot-\/code/git-\/vicentepedro/\+Online-\/\+Body-\/\+Schema-\/\+Adaptation/modules/likelihood\+Assessment/src/likelihood.\+cpp}}
+
+
+Class likelihood\+Assessment.  
+
+
+{\ttfamily \#include $<$gl\textbackslash{}glew.\+h$>$}\\*
+{\ttfamily \#include $<$gl\textbackslash{}\+G\+L.\+h$>$}\\*
+{\ttfamily \#include $<$gl\textbackslash{}\+G\+L\+U.\+h$>$}\\*
+{\ttfamily \#include $<$gl\textbackslash{}glext.\+h$>$}\\*
+{\ttfamily \#include $<$cuda\+\_\+runtime.\+h$>$}\\*
+{\ttfamily \#include $<$cuda\+\_\+gl\+\_\+interop.\+h$>$}\\*
+{\ttfamily \#include $<$helper\+\_\+cuda.\+h$>$}\\*
+{\ttfamily \#include $<$helper\+\_\+cuda\+\_\+gl.\+h$>$}\\*
+{\ttfamily \#include $<$helper\+\_\+functions.\+h$>$}\\*
+{\ttfamily \#include $<$rendercheck\+\_\+gl.\+h$>$}\\*
+{\ttfamily \#include $<$opencv2/imgproc/imgproc.\+hpp$>$}\\*
+{\ttfamily \#include $<$opencv2/core/core.\+hpp$>$}\\*
+{\ttfamily \#include $<$opencv2/highgui/highgui.\+hpp$>$}\\*
+{\ttfamily \#include $<$opencv2/gpu/gpu.\+hpp$>$}\\*
+{\ttfamily \#include $<$opencv2/gpu/gpumat.\+hpp$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries \+\_\+\+\_\+declspec} (dllexport) int Upload\+Im\+To\+Texture(void $\ast$fbo\+Color\+Tex2\label{likelihood_8cpp_addb9492cbf8b49028bd70ecd95524d5b}
+
+\item 
+{\bfseries gl\+Bind\+Texture} (G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, fbo\+Color\+Tex)\label{likelihood_8cpp_afdcb72a6b50ba4e13f1de388cf45fc9a}
+
+\item 
+{\bfseries gl\+Pixel\+Storei} (G\+L\+\_\+\+U\+N\+P\+A\+C\+K\+\_\+\+A\+L\+I\+G\+N\+M\+E\+NT, align)\label{likelihood_8cpp_af8dc69a917ec05f425e15fd9009e5c56}
+
+\item 
+{\bfseries gl\+Pixel\+Storei} (G\+L\+\_\+\+U\+N\+P\+A\+C\+K\+\_\+\+R\+O\+W\+\_\+\+L\+E\+N\+G\+TH, width\+Step/channels)\label{likelihood_8cpp_a42dbb4feedfcd0b5e6403f8b9c02b7eb}
+
+\item 
+{\bfseries gl\+Tex\+Parameteri} (G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+\+M\+I\+N\+\_\+\+F\+I\+L\+T\+ER, G\+L\+\_\+\+N\+E\+A\+R\+E\+ST)\label{likelihood_8cpp_a97aea50763405389148f926dba880e86}
+
+\item 
+{\bfseries gl\+Tex\+Parameteri} (G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+\+M\+A\+G\+\_\+\+F\+I\+L\+T\+ER, G\+L\+\_\+\+N\+E\+A\+R\+E\+ST)\label{likelihood_8cpp_ad108eb61e678ec606443a5024256bc04}
+
+\item 
+{\bfseries gl\+Tex\+Image2D} (G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, 0, G\+L\+\_\+\+R\+G\+B\+A16F, 640, 240, 0, G\+L\+\_\+\+B\+GR, G\+L\+\_\+\+U\+N\+S\+I\+G\+N\+E\+D\+\_\+\+B\+Y\+TE, image)\label{likelihood_8cpp_a52f6c6cbefa2a16ad9fa6c4645fb9f23}
+
+\item 
+{\bfseries if} (gl\+Get\+Error()) return-\/2\label{likelihood_8cpp_a39b284aca13da1d997182d6f3dfcf647}
+
+\item 
+void {\bfseries Bind\+To\+Texture} (cuda\+Array $\ast$cu\+Arr)\label{likelihood_8cpp_a13bdf562e1a8c134961c097978b6ad40}
+
+\item 
+void {\bfseries Bind\+To\+Texture\+Gray} (cuda\+Array $\ast$cu\+Arr)\label{likelihood_8cpp_a9bd1a50894d1115d05c57f87add73c42}
+
+\item 
+void {\bfseries Device\+Array\+Copy\+From\+Texture} (float3 $\ast$dst, int dst\+Step, int width, int height)\label{likelihood_8cpp_aed2b9af36a5d83fb5af9a3e0216a9bda}
+
+\item 
+cv\+::gpu\+::\+Gpu\+Mat {\bfseries gpu\+Mat} (height, width, C\+V\+\_\+32\+F\+C3)\label{likelihood_8cpp_a9e11d91678df63408922f36ab79e1ced}
+
+\item 
+cv\+::gpu\+::\+Gpu\+Mat {\bfseries Ggpu\+Mat} (height, width, C\+V\+\_\+32\+F\+C1)\label{likelihood_8cpp_afb29da2e21ca335d2a631cf195a5e80c}
+
+\item 
+cv\+::gpu\+::\+Gpu\+Mat {\bfseries gpu\+Mat\+\_\+R} (height, width, C\+V\+\_\+32\+F\+C3)\label{likelihood_8cpp_aba302d62e85ef4e6728a6fe42cd15590}
+
+\item 
+cv\+::gpu\+::\+Gpu\+Mat {\bfseries Ggpu\+Mat\+\_\+R} (height, width, C\+V\+\_\+32\+F\+C1)\label{likelihood_8cpp_a90bbd15ab1dd67bb336fea136c8d408e}
+
+\item 
+cv\+::gpu\+::\+Gpu\+Mat {\bfseries Gpu\+Mat\+Mul} (height, width, C\+V\+\_\+32\+F\+C1)\label{likelihood_8cpp_a1961759f7e191502e163ba50304b876c}
+
+\item 
+{\bfseries gl\+Bind\+Texture} (G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, gltex\+\_\+R)\label{likelihood_8cpp_a5de2c2b7029c53b9e622cacdaacf94b7}
+
+\item 
+{\bfseries check\+Cuda\+Errors} (cuda\+Graphics\+G\+L\+Register\+Image(\&cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R, gltex\+\_\+R, G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2D, cuda\+Graphics\+Map\+Flags\+Read\+Only))\label{likelihood_8cpp_a306197df655aaeb8213e99b155fde626}
+
+\item 
+{\bfseries check\+Cuda\+Errors} (cuda\+Graphics\+Map\+Resources(1,\&cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R, 0))\label{likelihood_8cpp_ac68ed96bf30aeacb13b1a800a10d4060}
+
+\item 
+{\bfseries check\+Cuda\+Errors} (cuda\+Graphics\+Sub\+Resource\+Get\+Mapped\+Array(\&cu\+Arr\+\_\+R, cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R, 0, 0))\label{likelihood_8cpp_aaa713469a9bf20fc53000101a5ab47c6}
+
+\item 
+{\bfseries Bind\+To\+Texture} (cu\+Arr\+\_\+R)\label{likelihood_8cpp_a5b043bab31298d8e85d86656d58972bd}
+
+\item 
+{\bfseries Device\+Array\+Copy\+From\+Texture} ((float3 $\ast$) gpu\+Mat\+\_\+\+R.\+data, gpu\+Mat\+\_\+\+R.\+step, gpu\+Mat\+\_\+\+R.\+cols, gpu\+Mat\+\_\+\+R.\+rows)\label{likelihood_8cpp_a4248503807669058cd7290381f625e1c}
+
+\item 
+{\bfseries check\+Cuda\+Errors} (cuda\+Graphics\+Unmap\+Resources(1,\&cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R, 0))\label{likelihood_8cpp_a3dc8472645de6996b1ac2376def0be0b}
+
+\item 
+{\bfseries check\+Cuda\+Errors} (cuda\+Graphics\+Unregister\+Resource(cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R))\label{likelihood_8cpp_a06ff6f8286c764c8cf9b4e24e2a4848c}
+
+\item 
+{\bfseries for} (int i=0;i$<$ 200;i++)\label{likelihood_8cpp_adce22cf71cc855135c2e42e849f0b726}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries width}\label{likelihood_8cpp_a2474a5474cbff19523a51eb1de01cda4}
+
+\item 
+int int {\bfseries height}\label{likelihood_8cpp_adc7b4b8a6ef510e136071efbc9cd9a58}
+
+\item 
+int int void $\ast$ {\bfseries image}\label{likelihood_8cpp_af96f66398b26df63fa34b19851f75a0f}
+
+\item 
+int int void int {\bfseries align}\label{likelihood_8cpp_ac7708d246936a1a04e21e20a53f914ee}
+
+\item 
+int int void int int {\bfseries width\+Step}\label{likelihood_8cpp_a36fcdb672fd05377b7a97714df2bf178}
+
+\item 
+int int void int int int {\bfseries channels}
+\item 
+G\+Luint {\bfseries fbo\+Color\+Tex} = (G\+Luint) (size\+\_\+t) fbo\+Color\+Tex2\label{likelihood_8cpp_a68f26998b31b50787befdfb8d6ba8e84}
+
+\item 
+{\bfseries return}\label{likelihood_8cpp_a9717e7bbecb906637e86cef6da3d83c2}
+
+\item 
+int void $\ast$ {\bfseries ID} \mbox{[}200\mbox{]}\label{likelihood_8cpp_a2ffb5fd2b555085c754522b95a99fc76}
+
+\item 
+int void void $\ast$ {\bfseries I\+D\+\_\+real}\label{likelihood_8cpp_ad433c1debd12d67692de2839ab367ee4}
+
+\item 
+cv\+::\+Mat {\bfseries Mat\+Disp}\label{likelihood_8cpp_a6c2131757d98a44c70bcc3bfc0445806}
+
+\item 
+cv\+::\+Mat {\bfseries Mat\+DispR}\label{likelihood_8cpp_a8b2dc2c4155b98b56d86b0addbe0d0d4}
+
+\item 
+cv\+::\+Mat {\bfseries Mat\+DispM}\label{likelihood_8cpp_af0f53481cd2fd57181d74ad3b2127f4e}
+
+\item 
+cv\+::\+Mat {\bfseries Mat\+Disp\+View}\label{likelihood_8cpp_acd465b56a09c9bc999d9f617ddd809f0}
+
+\item 
+float {\bfseries sum}\label{likelihood_8cpp_aeeafe7e9eebbd2a45ce4fa2ae0d96c51}
+
+\item 
+float {\bfseries non\+Zero}\label{likelihood_8cpp_a3f02be2b8a083cd0559c65abaf13a3d0}
+
+\item 
+float {\bfseries zero}\label{likelihood_8cpp_af4c259b2f53ff142ff807d740df48e56}
+
+\item 
+G\+Luint {\bfseries gltex}\label{likelihood_8cpp_a510b368e71006cc0ea18d9d510ef4d65}
+
+\item 
+struct cuda\+Graphics\+Resource $\ast$ {\bfseries cuda\+\_\+tex\+\_\+screen\+\_\+resource}\label{likelihood_8cpp_a8542be0f127dd1314ae2b3ca62884cb2}
+
+\item 
+cuda\+Array $\ast$ {\bfseries cu\+Arr}\label{likelihood_8cpp_a087b5d932ee4cb16898e673b2c143bc8}
+
+\item 
+G\+Luint {\bfseries gltex\+\_\+R} = (G\+Luint)(size\+\_\+t)(I\+D\+\_\+real)\label{likelihood_8cpp_afac9f93f2e96914d47151ae1151102c9}
+
+\item 
+struct cuda\+Graphics\+Resource $\ast$ {\bfseries cuda\+\_\+tex\+\_\+screen\+\_\+resource\+\_\+R}\label{likelihood_8cpp_aa27e72dc1f120f942f2d0a9655da0a8b}
+
+\item 
+cuda\+Array $\ast$ {\bfseries cu\+Arr\+\_\+R}\label{likelihood_8cpp_a840ece47918ff66079556022af6a848f}
+
+\item 
+float {\bfseries result} =0\label{likelihood_8cpp_a8b6cc3f78b62c5c59645624670120e4d}
+
+\item 
+int {\bfseries lambda\+Edge} = 25\label{likelihood_8cpp_ad904c470c3f681bf2facdd83e11382f6}
+
+\item 
+return {\bfseries likelihood}\label{likelihood_8cpp_adaadafc85d61f77d1a0b229127cd9200}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class likelihood\+Assessment. 
+
+Version\+: v2.\+0 \begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt}
+\end{DoxyAuthor}
+~\newline
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v3.\+0. 
+\end{DoxyCopyright}
+
+
+\subsection{Variable Documentation}
+\index{likelihood.\+cpp@{likelihood.\+cpp}!channels@{channels}}
+\index{channels@{channels}!likelihood.\+cpp@{likelihood.\+cpp}}
+\subsubsection[{\texorpdfstring{channels}{channels}}]{\setlength{\rightskip}{0pt plus 5cm}int void void void int int int channels}\label{likelihood_8cpp_aebab973ae81d008644594c91f0af5843}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+\{
+    \textcolor{keywordflow}{if} (glGetError())
+        \textcolor{keywordflow}{return} -1
+\end{DoxyCode}
+
+
+Definition at line 71 of file likelihood.\+cpp.
+

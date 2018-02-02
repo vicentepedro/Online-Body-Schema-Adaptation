@@ -1,0 +1,60 @@
+How to run the modules guide\hypertarget{how_to_use_internalmodel}{}\section{Running the internal model}\label{how_to_use_internalmodel}
+Open a terminal and execute the internal model\+: 
+\begin{DoxyCode}
+icub-internalmodel-rightA-cam-Lisbon.exe -force-opengl 
+\end{DoxyCode}
+ The internal model should start showing a high F\+PS value (depending on your machine)\hypertarget{how_to_use_with_dataset}{}\section{Testing with the Dataset}\label{how_to_use_with_dataset}
+Open a yarpdataplayer 
+\begin{DoxyCode}
+yarpdataplayer 
+\end{DoxyCode}
+ and choose the root folder of the \href{https://github.com/vicentepedro/eyeHandCalibrationDataset-Sim}{\tt dataset}.
+
+Open a yarpmanager 
+\begin{DoxyCode}
+yarpmanager 
+\end{DoxyCode}
+ and open the X\+ML file\+: 
+\begin{DoxyCode}
+app/scripts/OnlineBodySchemaAdaptation-dataset.xml 
+\end{DoxyCode}
+ N\+O\+TE\+: If you do not have I\+C\+U\+B\+Contrib or a make install, the hand\+Pose\+Estimation will not be found by yarpmanager, you can run it on a terminal on the respective build/bin folder.
+
+You should have a yarpmanager similar to this\+:
+
+
+
+Push the run button {\bfseries  (1) } . (and the three modules should appear green)
+
+Connected the ports {\bfseries  (2) }.
+
+Open a terminal and type\+: 
+\begin{DoxyCode}
+yarp rpc /hpe/rpc:i 
+\end{DoxyCode}
+ {\bfseries Then}, you can type 
+\begin{DoxyCode}
+help 
+\end{DoxyCode}
+ to see the options available, but the most important command is\+: 
+\begin{DoxyCode}
+start 
+\end{DoxyCode}
+ and the superimposed fingertips will appear on the two yarpviews.\hypertarget{how_to_use_without_dataset}{}\section{Testing with another robot}\label{how_to_use_without_dataset}
+Edit the template\+: 
+\begin{DoxyCode}
+OnlineBodySchemaAdaptation.xml.template
+\end{DoxyCode}
+ in particular the connection between the both left and right cameras and the head and arm encoders. Open the X\+ML with yarpmanager 
+\begin{DoxyCode}
+yarpmanager 
+\end{DoxyCode}
+ After running the modules and connecting the ports, follow the same procedure has the testing with the Dataset section.
+
+\begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt} ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v3.\+0. 
+\end{DoxyCopyright}

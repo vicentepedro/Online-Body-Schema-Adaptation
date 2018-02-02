@@ -1,0 +1,86 @@
+/**
+*
+* \page installation Installation Guide
+* Step-by-Step Installation Guide
+*
+* 
+* \section handpose_sec HandPoseEstimation
+*
+* \b Check its dependencies before installing this module:
+*
+* - YARP
+*
+*
+* - OpenCV (tested with v2.10 and v3.3)
+*
+* \b Optional
+* - ICUBcontrib [link](https://github.com/robotology/icub-contrib-common)
+*
+* \b Then:
+* 
+* Open a terminal.
+*
+* Go to the handPoseEstimation module root folder:
+*
+* - /Online-Body-Schema-Adaptation/modules/handPoseEstimation
+*
+* \code mkdir build && cd build \endcode
+*
+* \code ccmake .. \endcode
+*
+* Press \e c (twice) and, if no error occurs, press \e g do generate.
+*
+* Compile the code:
+* \code make \endcode 
+* and if you have the ICUBcontrib repository installed do a 
+* \code make install \endcode
+*
+* \note The installation process is similar if you are installing this module in a Windows machine)
+*
+* \section likelihood_sec Likelihood Assessment
+*
+* \b Check its dependencies before installing this module:
+*
+* - Windows Machine
+* - OpenCV (tested with v2.10)
+* - CUDA ToolKit (tested with v6.5)
+* - CMake-Gui
+* - Visual Studio (tested with VS10) or another C++/CUDA compiler 
+*
+* \b Then:
+*
+* Open the cmake-gui executable
+*
+* \image html ../../images/cmake.png
+*
+* In the section <EM> where is the source code </EM>, insert the path (absolute path):
+* \code /Online-Body-Schema-Adaptation/modules/likelihoodAssessment \endcode
+* In the section  <EM> where to build the binaries </EM>, insert the path (absolute path):
+* \code /Online-Body-Schema-Adaptation/modules/likelihoodAssessment/build \endcode
+* and press the configure button, choosing the \e 32 \e bit \e version of your compiler 
+*
+* The variable <EM> CUDA_SDK_ROOT_DIR </EM> will appear and should point to 
+* \code C:\ProgramData\NVIDIA Corporation\CUDA Samples\v6.5\common \endcode
+* or similar, according to the CUDA version installed.
+*
+* Press generate and open the CUDAcompareEdge2.sln file (which is inside the build folder)
+* 
+* choose \e Release version, set CudacompareEdge2 as the Startup project, and build the project.
+*
+* You should have now a \e CudacompareEdge2.dll file inside the \e Release folder.
+*
+* \section internalmode_sec Robot's Internal Model
+*
+* Compile the Yarp Bindings for C#: 
+*
+* http://www.yarp.it/yarp_swig.html#yarp_swig_windows
+*
+* You should have a \e yarp.dll file after installing the bindings.
+*
+* Copy the \e CudacompareEdge2.dll file (generated during the compilation of the likelihood Assessment) and the \e yarp.dll to:
+* \code modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon_Data/Plugins/ \endcode
+*
+* \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
+* \n
+* \copyright  Released under the terms of the GNU GPL v3.0.
+*/

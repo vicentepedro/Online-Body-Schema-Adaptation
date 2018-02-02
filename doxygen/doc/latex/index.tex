@@ -1,0 +1,77 @@
+We propose a markerless hand pose estimation software for the i\+Cub humanoid robot. The agent can calibrate its eye-\/hand kinematic chain without any markers which, from a developmental psychology perspective, can be seen as a body schema adaptation.
+
+\subsection*{Overview\+:}
+
+
+\begin{DoxyItemize}
+\item Repository Organization
+\item Dependencies \& how to install
+\item Running the Modules
+\item References
+\end{DoxyItemize}
+
+\subsection*{Repository Organization\+:}
+
+The code is divided into three logical components modules\+:
+
+i) the hand pose estimation (see \hyperlink{group__handPoseEstimation-module}{hand\+Pose\+Estimation-\/module}); ii) the Robot’s Internal Model generator (see \hyperlink{group__internalModel}{internal\+Model}); iii) the likelihood assessment (see \hyperlink{group__likelihoodAssessment}{likelihood\+Assessment});
+
+which are implemented, respectively, at the following repository locations\+:
+\begin{DoxyItemize}
+\item modules/hand\+Pose\+Estimation\+:
+\begin{DoxyItemize}
+\item \hyperlink{handPoseEstimationModule_8h}{include/hand\+Pose\+Estimation\+Module.\+h}
+\item \hyperlink{handPoseEstimationMain_8cpp}{src/hand\+Pose\+Estimation\+Main.\+cpp}
+\item \hyperlink{handPoseEstimationModule_8cpp}{src/hand\+Pose\+Estimation\+Module.\+cpp}
+\end{DoxyItemize}
+\item modules/internalmodel\+:
+\begin{DoxyItemize}
+\item icub-\/internalmodel-\/right\+A-\/cam-\/\+Lisbon.\+exe
+\item icub-\/internalmodel-\/left\+A-\/cam-\/\+Lisbon.\+exe
+\end{DoxyItemize}
+\item modules/likelihod\+Assessment\+:
+\begin{DoxyItemize}
+\item \hyperlink{Cuda__Gl_8cu_source}{src/\+Cuda\+\_\+\+Gl.\+cu}
+\item \hyperlink{likelihood_8cpp}{src/likelihood.\+cpp}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+The software architecture implementing the proposed eye-\/hand calibration solution can be seen in the following picture\+:
+
+ 
+
+\subsection*{How to install}
+
+Please refer to the documentation\+:
+
+\hyperlink{installation}{Installation Guide}
+
+\subsection*{Running the Modules}
+
+Please refer to the documentation\+:
+
+\hyperlink{how_to_use}{How to run the modules}
+
+\subsection*{References}
+
+If you use this code please cite the following reference\+: \begin{DoxyVerb}ARTICLE{ 10.3389/frobt.2016.00007,
+AUTHOR={Vicente, Pedro  and  Jamone, Lorenzo  and  Bernardino, Alexandre},
+TITLE={Online body schema adaptation based on internal mental simulation and multisensory feedback},
+JOURNAL={Frontiers in Robotics and AI},
+VOLUME={3},
+YEAR={2016},
+NUMBER={7},
+DOI={10.3389/frobt.2016.00007},
+ISSN={2296-9144}
+}
+\end{DoxyVerb}
+
+
+The full open-\/access article can be found \href{https://doi.org/10.3389/frobt.2016.00007}{\tt here}
+
+\begin{DoxyAuthor}{Author}
+Pedro Vicente \href{mailto:pvicente@isr.tecnico.ulisboa.pt}{\tt pvicente@isr.\+tecnico.\+ulisboa.\+pt} 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Released under the terms of the G\+NU G\+PL v3.\+0. 
+\end{DoxyCopyright}
