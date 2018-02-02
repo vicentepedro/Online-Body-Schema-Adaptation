@@ -51,62 +51,9 @@ The software architecture implementing the proposed eye-hand calibration solutio
 
 ## How to install
 
-- HandPoseEstimation Module:
-  - On the folder:
-    
-    /modules/handPoseEstimation
+Please refer to the documentation:
 
-  - Run the following commands:
-    ``` bash
-    $ mkdir build && cd build 
-
-    $ ccmake .. 
-    ```
-  - Press c (twice) and, if no error occurs, press g do generate.
-  - Exit cmake and then type:
-    ``` bash
-    $ make 
-    ```
-- Likelihood Assessment Module:
-  - Open the cmake-gui executable
-    - On the section:
-
-      `where is the source code `
-
-      insert the path (absolute path):
-
-      /Online-Body-Schema-Adaptation/modules/likelihoodAssessment 
-    - On the section:
-
-      `where to build the binaries`
-
-      insert the path (absolute path):
-
-      /Online-Body-Schema-Adaptation/modules/likelihoodAssessment/build 
-
-    - press the configure button, choosing the version of your 32 bit  compiler.
-
-    - The variable `CUDA_SDK_ROOT_DIR` will appear and should point to:
-
-      C:\ProgramData\NVIDIA Corporation\CUDA Samples\v6.5\common 
-
-      or similar, according to the CUDA version installed.
-
-    - Press the Generate Button
-
-  - Open the CUDAcompareEdge2.sln project (which is inside the build folder) 
-    - choose Release version
-    - set CudacompareEdge2 as the Startup project
-    - and build the project.
-
-    You should have now a CudacompareEdge2.dll file inside the Release folder.
-
-- Robot's Internal Model:
-  - One can use the compile version (icub-internalmodel-rightA-cam-Lisbon)
-  - After compiling the YARP c# bindings, copy the `yarp.dll` to the folder:
-
-    /modules/internalmodel/icub-internalmodel-rightA-cam-Lisbon_Data/Plugins/ 
-  - copy also the `CudacompareEdge2.dll` to the above-mentioned folder.
+http://vicentepedro.github.io/Online-Body-Schema-Adaptation/doxygen/doc/html/installation.html
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
 
