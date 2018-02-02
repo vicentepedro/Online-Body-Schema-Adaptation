@@ -43,6 +43,18 @@ using namespace std;
 * \defgroup likelihoodAssessment likelihoodAssessment
 * likelihood Assessment based on edge extraction for the iCub Humanoid Robot
 * Version: v2.0 
+* \section Description
+*
+* The likelihood Assessment (likelihood.cpp and Cuda_Gl.cu files) will be used calculate the likelihood metric between the perception and the generated hypotheses inside the internal model exploiting the interoperability between the OpenGL, CUDA and OpenCV libraries.
+*
+* \section dependencies_sec Dependencies
+*
+* OpenCV
+*
+* CUDA ToolKit
+*
+* Check the installation guide in \ref installation to more details.
+*
 * \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
 * \n
 * \copyright  Released under the terms of the GNU GPL v3.0.
@@ -56,7 +68,7 @@ using namespace std;
 * \author  Pedro Vicente pvicente@isr.tecnico.ulisboa.pt
 * \file likelihood.cpp
 * \n
-* \copyright  License terms, for example: released under the terms of the GNU GPL v3.0 .
+* \copyright  Released under the terms of the GNU GPL v3.0.
 */
 extern "C" __declspec(dllexport) int UploadImToTexture(void* fboColorTex2, int width, int height, void* image, int align, int widthStep, int channels)
 {
@@ -181,7 +193,7 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
         */
         sum = sumS[0]*lambdaEdge; // lambdaEdge is a tuning parameter for distance sensitivity 
         
-        nonZero = (float) cv::gpu::countNonZero(GgpuMat); //gerada
+        nonZero = (float) cv::gpu::countNonZero(GgpuMat); //generated image
         if(nonZero==0) 
         {
             likelihood[i] = 0.000000001; // Almost Zero
