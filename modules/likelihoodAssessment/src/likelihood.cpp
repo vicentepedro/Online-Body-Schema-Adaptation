@@ -204,6 +204,6 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
             likelihood[i] = (int)((cv::exp(-result)) *1000);
         }
     }
-    return likelihood;	
+    return likelihood;
 }
 

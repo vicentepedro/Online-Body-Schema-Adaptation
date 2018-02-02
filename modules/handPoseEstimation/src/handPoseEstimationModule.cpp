@@ -270,7 +270,7 @@ bool handPoseEstimationModule::runSMCIteration()
     }
     // Apply artificial Dynamics
 
-   	CvMat* A = cvCreateMat(8,8,CV_32FC1);
+    CvMat* A = cvCreateMat(8,8,CV_32FC1);
     cvSetIdentity(A); //
     cvMatMul(A,newParticles,particles);
 
