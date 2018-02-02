@@ -8,12 +8,6 @@
  */
 
 /**
-* Class handPoseEstimationModule
-* 
-*
-*
-*
-*
 * \file handPoseEstimationModule.h
 *
 *
@@ -51,6 +45,11 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include "handPoseEstimation_IDL.h"
+
+/**
+* Class handPoseEstimationModule
+* 
+*/
 class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstimation_IDL
 {
     private:
@@ -121,16 +120,49 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > outputPortImage;
         yarp::os::BufferedPort< yarp::sig::ImageOf< yarp::sig::PixelBgr> > outputPortImage2;
 
-
     protected:
+        /**
+         * The function applies a canny edge detector and a distance transform
+         * @return the processed image
+         */
         cv::Mat processImages(cv::Mat inputImage);
+        /**
+         * Initialize the variables structs needed for the SMC to run
+         * @return true/false on success/failure
+         */
         bool initializeSMCVariables();
+        /**
+         * Initialize the variables values for the SMC
+         * @return true/false on success/failure
+         */
         bool initSMC();
+        /**
+         * Run one iteration of the Sequential Monte Carlo Parameters estimation
+         * @return true/false on success/failure
+         */
         bool runSMCIteration();
+        /**
+         * merge the left and right images. i.e., concatenate horizontally.
+         */
         void mergeAndFlipImages();
+        /**
+         * Perform the Kernel Density estimation with a multivariate gaussian kernel
+         */
         void kernelDensityEstimation();
+        /**
+         * Read the arm joints
+         * @return true/false on success/failure
+         */
         bool readArmJoints();
+        /**
+         * Read the head joints
+         * @return true/false on success/failure
+         */
         bool readHeadJoints();
+        /**
+         * perform the systematic resampling step of the SMC algorithm
+         * @return true/false on success/failure
+         */
         bool systematic_resampling(CvMat* oldParticlesState, CvMat* oldParticlesWeights, CvMat* newParticlesState, CvMat* cumWeight,float sum2);
     public:
         virtual bool configure(yarp::os::ResourceFinder &rf);
@@ -140,7 +172,7 @@ class handPoseEstimationModule : public yarp::os::RFModule, public handPoseEstim
         virtual double getPeriod();
         
         // IDL functions
-
+        
         bool attach(yarp::os::RpcServer &source);
         bool start();
         bool stop();
