@@ -23,15 +23,12 @@
 #include <helper_functions.h>
 #include <rendercheck_gl.h>
 
-
 // OpenCV
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>        
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/gpu/gpu.hpp>
 #include <opencv2/gpu/gpumat.hpp>
-//#include <opencv/cvaux.h>
-//#include <opencv/cv.h>
 
 #include <stdio.h>
 
@@ -130,12 +127,10 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 640, 240, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 
-
     checkCudaErrors( cudaGraphicsGLRegisterImage( &cuda_tex_screen_resource_R, gltex_R, GL_TEXTURE_2D, cudaGraphicsMapFlagsReadOnly ) );  
-        
+
     // Copy color buffer
     checkCudaErrors( cudaGraphicsMapResources( 1, &cuda_tex_screen_resource_R, 0 ) );
     checkCudaErrors( cudaGraphicsSubResourceGetMappedArray( &cuArr_R, cuda_tex_screen_resource_R, 0, 0 ) );
@@ -143,7 +138,6 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
     BindToTexture( cuArr_R );
 
     DeviceArrayCopyFromTexture( (float3*)gpuMat_R.data, gpuMat_R.step, gpuMat_R.cols, gpuMat_R.rows  );
-
 
     checkCudaErrors( cudaGraphicsUnmapResources( 1, &cuda_tex_screen_resource_R, 0 ) );
     checkCudaErrors( cudaGraphicsUnregisterResource(cuda_tex_screen_resource_R));    
@@ -154,12 +148,8 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
     int lambdaEdge = 25; 
     for(int i=0;i<200;i++) 
     {
-        gltex = (GLuint)(size_t)(ID[i]);
-            
+        gltex = (GLuint)(size_t)(ID[i]); // ID is a vector with pointers to the render textures
         glBindTexture (GL_TEXTURE_2D, gltex);
-
-
-
         GLint width,height,internalFormat;
         glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat); // get internal format type of GL texture
         glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width); // get width of GL texture
@@ -168,22 +158,19 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
         checkCudaErrors( cudaGraphicsGLRegisterImage( &cuda_tex_screen_resource, gltex, GL_TEXTURE_2D, cudaGraphicsMapFlagsReadOnly ) );  
         // Copy color buffer
         checkCudaErrors( cudaGraphicsMapResources( 1, &cuda_tex_screen_resource, 0 ) );
-        
         checkCudaErrors( cudaGraphicsSubResourceGetMappedArray( &cuArr, cuda_tex_screen_resource, 0, 0 ) );
-        
         BindToTexture( cuArr );
         
-        DeviceArrayCopyFromTexture( (float3*)gpuMat.data, gpuMat.step, gpuMat.cols, gpuMat.rows  );
-        
+        DeviceArrayCopyFromTexture( (float3*)gpuMat.data, gpuMat.step, gpuMat.cols, gpuMat.rows  ); // DeviceArrayCopyFromTexture function defined on Cuda_Gl.cu
         
         checkCudaErrors( cudaGraphicsUnmapResources( 1, &cuda_tex_screen_resource, 0 ) );
-        
         checkCudaErrors( cudaGraphicsUnregisterResource(cuda_tex_screen_resource));
-                
         cv::gpu::cvtColor(gpuMat,GgpuMat,CV_RGB2GRAY);
 
+        // Apply the likelihood Assessment 
+        // GgpuMat - generated Image
+        // GgpuMat_R - Real Distance Transform image
         cv::gpu::multiply(GgpuMat,GgpuMat_R,GpuMatMul);
-        
         cv::Scalar sumS = cv::gpu::sum(GpuMatMul);
 
         /*
@@ -192,7 +179,6 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
         In particular, Equation (21)
         */
         sum = sumS[0]*lambdaEdge; // lambdaEdge is a tuning parameter for distance sensitivity 
-        
         nonZero = (float) cv::gpu::countNonZero(GgpuMat); //generated image
         if(nonZero==0) 
         {
@@ -206,4 +192,3 @@ extern "C" __declspec(dllexport) int* CudaEdgeLikelihood(int height,int width,vo
     }
     return likelihood;
 }
-
