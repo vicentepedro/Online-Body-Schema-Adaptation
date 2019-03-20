@@ -87,7 +87,7 @@ http://vicentepedro.github.com/Online-Body-Schema-Adaptation
 
 # References
 
-If you use this code please cite the following reference:
+If you use this code please cite the following reference(s):
 
     @ARTICLE{10.3389/frobt.2016.00007,
     AUTHOR={Vicente, Pedro  and  Jamone, Lorenzo  and  Bernardino, Alexandre},
@@ -99,6 +99,21 @@ If you use this code please cite the following reference:
     DOI={10.3389/frobt.2016.00007},
     ISSN={2296-9144}
     
-The full article can be found [here](https://doi.org/10.3389/frobt.2016.00007)
+    @ARTICLE{10.3389/frobt.2018.00046,
+    AUTHOR={Vicente, Pedro and Jamone, Lorenzo and Bernardino, Alexandre},   
+    TITLE={Markerless Eye-Hand Kinematic Calibration on the iCub Humanoid Robot},      
+    JOURNAL={Frontiers in Robotics and AI},      
+    VOLUME={5},     
+    PAGES={46},     
+    YEAR={2018},       
+    DOI={10.3389/frobt.2018.00046},     
+    ISSN={2296-9144},   
+}
+    
+The full articles can be found:
+[here](https://doi.org/10.3389/frobt.2016.00007)
+and
+[here](https://doi.org/10.3389/frobt.2018.00046)
+
 
 [`Go to the top`](#online-body-schema-adaptation--markerless-eye-hand-kinematic-calibration)
